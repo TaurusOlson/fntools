@@ -125,7 +125,13 @@ def pluck(record, *keys):
     >>> print pluck(d, ["name", "color"])
     {"name": "Lancelot", "color": "blue"}
 
+    # the keyword "default" allows to replace a None value
+    >>> d = {"year": 2014, "movie": "Bilbo"}
+    >>> print pluck(d, "year", "movie", "nb_aliens", default=0)
+    {"year": 2014, "movie": "Bilbo", "nb_aliens": 0}
+
     """
+    default = kwargs.get("default", None)
     return reduce(lambda a, x: assoc(a, x, record.get(x)), keys, {})
 
 
