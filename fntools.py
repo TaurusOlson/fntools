@@ -86,7 +86,53 @@ def indexesof(coll, element):
 	return [i for i in xrange(len(coll)) if coll[i] == element]
 
 
-# PREDICATES
+# PREDICATE FUNCTIONS {{{2
+
+def are_in(items, collection):
+    if not isinstance(items, (list, tuple)):
+        items = (items, )
+    return map(lambda x: x in collection, items)
+
+
+def any_in(items, collection):
+    """Return True if any of the items are in the collection
+
+    Usage
+    -----
+    >>> any_in(items, collection)
+
+    Inputs
+    ------
+    items : scalar or iterable
+    collection : iterable
+
+    Returns
+    -------
+    True or False
+    
+    """
+    return any(are_in(items, collection))
+
+
+def all_in(items, collection):
+    """Return True if all of the items are in the collection
+    
+    Usage
+    -----
+    >>> all_in(items, collection)
+
+    Inputs
+    ------
+    items : scalar or iterable
+    collection : iterable
+
+    Returns
+    -------
+    True or False
+    
+    """
+    return all(are_in(items, collection))
+
 
 def issorted(coll):
     """Determine if a collection is sorted
@@ -119,10 +165,10 @@ def assoc(_d, key, value):
     return d
 
 
-def pluck(record, *keys):
+def pluck(record, *keys, **kwargs):
     """
     >>> d = {"name": "Lancelot", "actor": "John Cleese", "color": "blue"}
-    >>> print pluck(d, ["name", "color"])
+    >>> print pluck(d, "name", "color")
     {"name": "Lancelot", "color": "blue"}
 
     # the keyword "default" allows to replace a None value
@@ -132,7 +178,7 @@ def pluck(record, *keys):
 
     """
     default = kwargs.get("default", None)
-    return reduce(lambda a, x: assoc(a, x, record.get(x)), keys, {})
+    return reduce(lambda a, x: assoc(a, x, record.get(x, default)), keys, {})
 
 
 def extract_values(record, keys):
