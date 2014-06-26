@@ -166,3 +166,56 @@ def dmap(func, record):
     """A map for a directory"""
     values = (func(v) for k, v in record.items())
     return dict(zip(record, values))
+
+
+# FUNCTIONS FOR INSPECTING THE DATA {{{2
+
+def attributes(data):
+    """Return all the non callable and non special attributes of the input data"""
+    return [x for x in dir(data) if not callable(x) and not x.startswith("__")]
+
+
+def find(func, record):
+    """"Apply a function on the record and return the corresponding new record
+    
+    >>> print find(max, {"Terry": 30, "Graham": 35, "John": 27}) 
+    {"Graham": 35}
+
+    """
+    values_result = func(record.values())
+    keys_result = [k for k, v in record.items() if v == values_result]
+    return {keys_result[0]: values_result}
+
+
+def select_value(func, record):
+    """Returns a record satisfying the input predicate function on the value
+
+    :func: A predicate function
+    :record: a dict
+    :returns: a dict
+
+    Usage
+    -----
+    >>> odd = lambda x: x % 2 != 0
+    >>> print select(odd, {"Terry": 30, "Graham": 35, "John": 27})
+    {"John": 27, "Graham": 35}
+
+    """
+    return dict([(k, v) for k, v in record.items() if func(v)])
+
+
+def select_key(func, record):
+    """Returns a record satisfying the input predicate function on the key
+
+    :func: A predicate function
+    :record: a dict
+    :returns: a dict
+
+    Usage
+    -----
+    >>> odd = lambda x: x % 2 != 0
+    >>> print select(odd, {"Terry": 30, "Graham": 35, "John": 27})
+    {"John": 27, "Graham": 35}
+
+    """
+    return dict([(k, v) for k, v in record.items() if func(v)])
