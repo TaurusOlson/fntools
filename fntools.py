@@ -70,6 +70,16 @@ def compose(*funcs):
     def compose2(f, g):
         return lambda x: f(g(x))
     return reduce(compose2, funcs)
+
+
+def dispatch(data, funcs):
+    """Apply the functions on the data
+    
+    >>> x = (1, 42, 5, 79)
+    >>> print dispatch(x, (min, max))
+    (1, 79)
+    """
+    return map(lambda func: func(data), funcs)
     
 
 def indexesof(coll, element):
