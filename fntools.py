@@ -14,7 +14,6 @@ import collections
 
 # TRANSFORMATION {{{1
 
-# TODO Implement use_with
 def use_with(data, fn, *attrs):
     """
     # Let's create some data first
@@ -37,7 +36,7 @@ def zip_with(fn, *colls):
 
     :param fn: a function
     :param colls: collections
-    
+
     >>> print list(zip_with(lambda x, y: x-y, [10, 20, 30], [42, 19, 43]))
     [-32, 1, -13]
 
@@ -51,7 +50,7 @@ def unzip(colls):
 
 
 def concat(colls):
-    """Concatenate a list of collections 
+    """Concatenate a list of collections
 
     :param colls: a list of collections
     :returns: the concatenation of the collections
@@ -65,7 +64,7 @@ def concat(colls):
 
 def mapcat(fn, colls):
     """Concatenate the result of a map
-    
+
     :param fn: a function
     :param colls: a list of collections
     """
@@ -75,7 +74,7 @@ def mapcat(fn, colls):
 # TODO Fix and test dmap
 def dmap(fn, record):
     """map for a directory
-    
+
     :param fn: a function
     :param record: a dictionary
     :returns: a dictionary
@@ -87,7 +86,7 @@ def dmap(fn, record):
 
 def compose(*fns):
     """Return the function composed with the given functions
-    
+
     >>> add2 = lambda x: x+2
     >>> mult3 = lambda x: x*3
     >>> new_fn = compose(add2, mult3)
@@ -105,7 +104,7 @@ def compose(*fns):
 
 def groupby(f, sample):
     """Group elements in sub-samples by f
-    
+
     >>> print groupby(len, ['John', 'Terry', 'Eric', 'Graham', 'Mickael'])
     {4: ['John', 'Eric'], 5: ['Terry'], 6: ['Graham'], 7: ['Mickael']}
 
@@ -119,7 +118,7 @@ def groupby(f, sample):
 
 def reductions(fn, seq, acc=None):
     """Return the intermediate values of a reduction
-    
+
     >>> print reductions(lambda x, y: x + y, [1, 2, 3])
     [1, 3, 6]
 
@@ -131,7 +130,8 @@ def reductions(fn, seq, acc=None):
     if acc:
         return map(lambda i: reduce(lambda x, y: fn(x, y), seq[:i+1], acc), indexes)
     else:
-        return map(lambda i: reduce(lambda x, y: fn(x, y), seq[:i+1]), indexes) 
+        return map(lambda i: reduce(lambda x, y: fn(x, y), seq[:i+1]), indexes)
+
 
 def split(coll, factor):
     """Split a collection by using a factor
@@ -151,7 +151,7 @@ def split(coll, factor):
 def duplicates(coll):
     """Return the duplicated items in the given collection"""
     return list(set(x for x in coll if coll.count(x) > 1))
-    
+
 
 def pluck(record, *keys, **kwargs):
     """
@@ -202,7 +202,7 @@ def get_in(record, *keys, **kwargs):
 
 def valuesof(record, keys):
     """Return the values corresponding to the given keys
-    
+
     >>> band = {'name': 'Metallica', 'singer': 'James Hetfield', 'guitarist': 'Kirk Hammet'}
     >>> print valuesof(band, ('name', 'date', 'singer'))
     ['Metallica', None, 'James Hetfield']
@@ -229,8 +229,8 @@ def valueof(records, key):
 
 def take(n, seq):
     """Return the n first items in the sequence
-    
-    >>> take(3, xrange(10000)) 
+
+    >>> take(3, xrange(10000))
     [0, 1, 2]
 
     """
@@ -239,8 +239,8 @@ def take(n, seq):
 
 def drop(n, seq):
     """Return the n last items in the sequence
-    
-    >>> drop(9997, xrange(10000)) 
+
+    >>> drop(9997, xrange(10000))
     [9997, 9998, 9999]
 
     """
@@ -264,9 +264,9 @@ def assoc(_d, key, value):
 
 def dispatch(data, fns):
     """Apply the functions on the data
-    
+
     :param data: the data
-    :param fns: a list of functions 
+    :param fns: a list of functions
 
     >>> x = (1, 42, 5, 79)
     >>> print dispatch(x, (min, max))
@@ -278,7 +278,7 @@ def dispatch(data, fns):
 
 def multimap(fn, colls):
     """Apply a function on multiple collections
-    
+
     >>> print multimap(operator.add, ((1, 2, 3), (4, 5, 6)))
     [5, 7, 9]
 
@@ -316,7 +316,7 @@ def any_in(items, collection):
     """Return True if any of the items are in the collection
 
     :param items: items that may be in the collection
-    :param collection: a collection 
+    :param collection: a collection
 
     >>> print any_in(2, [1, 3, 2])
     True
@@ -333,7 +333,7 @@ def all_in(items, collection):
     """Return True if all of the items are in the collection
 
     :param items: items that may be in the collection
-    :param collection: a collection 
+    :param collection: a collection
 
     >>> print all_in(2, [1, 3, 2])
     True
@@ -350,9 +350,9 @@ def issorted(coll):
     """Determine if a collection is sorted
 
     :param coll: a collection
-    
+
     :returns: 1 if the collection is sorted (increasing)
-    :returns: 0 if it is not sorted 
+    :returns: 0 if it is not sorted
     :returns: -1 if is sorted in reverse order (decreasing)
 
     >>> issorted([1, 2, 3])
@@ -378,8 +378,8 @@ def attributes(data):
 
 def find(fn, record):
     """'Apply a function on the record and return the corresponding new record
-    
-    >>> print find(max, {'Terry': 30, 'Graham': 35, 'John': 27}) 
+
+    >>> print find(max, {'Terry': 30, 'Graham': 35, 'John': 27})
     {'Graham': 35}
 
     """
@@ -390,7 +390,7 @@ def find(fn, record):
 
 def dfilter(fn, record):
     """filter for a directory
-   
+
     :param fn: A predicate function
     :param record: a dict
     :returns: a dict
@@ -405,7 +405,7 @@ def dfilter(fn, record):
 
 def occurrences(coll, value=None):
     """Return the occurrences of the elements in the collection
-    
+
     >>> print occurrences((1, 1, 2, 3))
     {1: 2, 2: 1, 3: 1}
     >>> print occurrences((1, 1, 2, 3), 1)
@@ -415,7 +415,7 @@ def occurrences(coll, value=None):
     count = {}
     for element in coll:
         count[element] = count.get(element, 0) + 1
-    
+
     if value:
         count = count.get(value, 0)
     return count
@@ -423,20 +423,20 @@ def occurrences(coll, value=None):
 
 def indexof(coll, item, start=0, default=None):
     """Return the index of the item in the collection
-    
+
     :param coll: iterable
     :param item: scalar
     :param start: (optional) The start index
     :default: The default value of the index if the item is not in the collection
 
     :returns: idx -- The index of the item in the collection
-    
+
     """
     if item in coll:
         return list(coll).index(item, start)
     else:
         return default
-    
+
 
 def indexesof(coll, item):
     """Return all the indexes of the item in the collection"""
@@ -451,7 +451,7 @@ def count(fn, coll):
     2
 
     """
-    return len([x for x in coll if fn(x) == True])
+    return len([x for x in coll if fn(x) is True])
 
 
 def isdistinct(coll):
@@ -464,5 +464,3 @@ def isdistinct(coll):
     """
     most_common = collections.Counter(coll).most_common(1)
     return not most_common[0][1] > 1
-
-
