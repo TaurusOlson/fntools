@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>API &mdash; fntools 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.1.0/flatly/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="fntools 1.0 documentation" href="index.html" />
+    <link rel="prev" title="Quickstart" href="quickstart.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          fntools</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">API</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">API</a><ul>
+<li><a class="reference internal" href="#transformation">Transformation</a></li>
+<li><a class="reference internal" href="#filtering">Filtering</a></li>
+<li><a class="reference internal" href="#creation">Creation</a></li>
+<li><a class="reference internal" href="#inspection">Inspection</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="quickstart.html" title="Previous Chapter: Quickstart"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm">&laquo; Quickstart</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/api.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="api">
+<span id="id1"></span><h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="#transformation">Transformation</a></li>
+<li><a class="reference internal" href="#filtering">Filtering</a></li>
+<li><a class="reference internal" href="#creation">Creation</a></li>
+<li><a class="reference internal" href="#inspection">Inspection</a></li>
+</ul>
+<div class="section" id="transformation">
+<h2>Transformation<a class="headerlink" href="#transformation" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<dl class="function">
+<dt id="fntools.zip_with">
+<tt class="descclassname">fntools.</tt><tt class="descname">zip_with</tt><big>(</big><em>f</em>, <em>*colls</em><big>)</big><a class="reference internal" href="_modules/fntools.html#zip_with"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.zip_with" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the result of the function applied on the zip of the collections</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>f</strong> &#8211; a function</li>
+<li><strong>colls</strong> &#8211; collections</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="nb">list</span><span class="p">(</span><span class="n">zip_with</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span> <span class="p">[</span><span class="mi">42</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">43</span><span class="p">]))</span>
+<span class="go">[-32, 1, -13]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.concat">
+<tt class="descclassname">fntools.</tt><tt class="descname">concat</tt><big>(</big><em>colls</em><big>)</big><a class="reference internal" href="_modules/fntools.html#concat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.concat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Concatenate a list of collections</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>colls</strong> &#8211; a list of collections</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the concatenation of the collections</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">concat</span><span class="p">(([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>
+<span class="go">[1, 2, 3, 4]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.mapcat">
+<tt class="descclassname">fntools.</tt><tt class="descname">mapcat</tt><big>(</big><em>fn</em>, <em>colls</em><big>)</big><a class="reference internal" href="_modules/fntools.html#mapcat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.mapcat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Concatenate the result of a map</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fn</strong> &#8211; a function</li>
+<li><strong>colls</strong> &#8211; a list of collections</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.dmap">
+<tt class="descclassname">fntools.</tt><tt class="descname">dmap</tt><big>(</big><em>fn</em>, <em>record</em><big>)</big><a class="reference internal" href="_modules/fntools.html#dmap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.dmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>map for a directory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fn</strong> &#8211; a function</li>
+<li><strong>record</strong> &#8211; a dictionary</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a dictionary</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.compose">
+<tt class="descclassname">fntools.</tt><tt class="descname">compose</tt><big>(</big><em>*fns</em><big>)</big><a class="reference internal" href="_modules/fntools.html#compose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.compose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the function composed with the given functions</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">add2</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mult3</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">new_fn</span> <span class="o">=</span> <span class="n">compose</span><span class="p">(</span><span class="n">add2</span><span class="p">,</span> <span class="n">mult3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">new_fn</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">8</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">compose(fn1, fn2, fn3) is the same as fn1(fn2(fn3))
+which means that the last function provided is the first to be applied.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.groupby">
+<tt class="descclassname">fntools.</tt><tt class="descname">groupby</tt><big>(</big><em>f</em>, <em>sample</em><big>)</big><a class="reference internal" href="_modules/fntools.html#groupby"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.groupby" title="Permalink to this definition">¶</a></dt>
+<dd><p>Group elements in sub-samples by f</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">groupby</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;John&#39;</span><span class="p">,</span> <span class="s">&#39;Terry&#39;</span><span class="p">,</span> <span class="s">&#39;Eric&#39;</span><span class="p">,</span> <span class="s">&#39;Graham&#39;</span><span class="p">,</span> <span class="s">&#39;Mickael&#39;</span><span class="p">])</span>
+<span class="go">{4: [&#39;John&#39;, &#39;Eric&#39;], 5: [&#39;Terry&#39;], 6: [&#39;Graham&#39;], 7: [&#39;Mickael&#39;]}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.reductions">
+<tt class="descclassname">fntools.</tt><tt class="descname">reductions</tt><big>(</big><em>fn</em>, <em>seq</em>, <em>acc=None</em><big>)</big><a class="reference internal" href="_modules/fntools.html#reductions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.reductions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the intermediate values of a reduction</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">reductions</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="go">[1, 3, 6]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">reductions</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="mi">10</span><span class="p">)</span>
+<span class="go">[11, 13, 16]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.split">
+<tt class="descclassname">fntools.</tt><tt class="descname">split</tt><big>(</big><em>coll</em>, <em>factor</em><big>)</big><a class="reference internal" href="_modules/fntools.html#split"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split a collection by using a factor</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">bands</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;Led Zeppelin&#39;</span><span class="p">,</span> <span class="s">&#39;Debussy&#39;</span><span class="p">,</span> <span class="s">&#39;Metallica&#39;</span><span class="p">,</span> <span class="s">&#39;Iron Maiden&#39;</span><span class="p">,</span> <span class="s">&#39;Bach&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">styles</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;rock&#39;</span><span class="p">,</span> <span class="s">&#39;classic&#39;</span><span class="p">,</span> <span class="s">&#39;rock&#39;</span><span class="p">,</span> <span class="s">&#39;rock&#39;</span><span class="p">,</span> <span class="s">&#39;classic&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">split</span><span class="p">(</span><span class="n">bands</span><span class="p">,</span> <span class="n">styles</span><span class="p">)</span>
+<span class="go">{&#39;classic&#39;: [&#39;Debussy&#39;, &#39;Bach&#39;],</span>
+<span class="go"> &#39;rock&#39;: [&#39;Led Zeppelin&#39;, &#39;Metallica&#39;, &#39;Iron Maiden&#39;]}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="filtering">
+<h2>Filtering<a class="headerlink" href="#filtering" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="fntools.duplicates">
+<tt class="descclassname">fntools.</tt><tt class="descname">duplicates</tt><big>(</big><em>coll</em><big>)</big><a class="reference internal" href="_modules/fntools.html#duplicates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.duplicates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the duplicated items in the given collection</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.pluck">
+<tt class="descclassname">fntools.</tt><tt class="descname">pluck</tt><big>(</big><em>record</em>, <em>*keys</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/fntools.html#pluck"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.pluck" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;Lancelot&#39;</span><span class="p">,</span> <span class="s">&#39;actor&#39;</span><span class="p">:</span> <span class="s">&#39;John Cleese&#39;</span><span class="p">,</span> <span class="s">&#39;color&#39;</span><span class="p">:</span> <span class="s">&#39;blue&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">pluck</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;color&#39;</span><span class="p">)</span>
+<span class="go">{&#39;color&#39;: &#39;blue&#39;, &#39;name&#39;: &#39;Lancelot&#39;}</span>
+</pre></div>
+</div>
+<p># the keyword &#8216;default&#8217; allows to replace a None value
+&gt;&gt;&gt; d = {&#8216;year&#8217;: 2014, &#8216;movie&#8217;: &#8216;Bilbo&#8217;}
+&gt;&gt;&gt; print pluck(d, &#8216;year&#8217;, &#8216;movie&#8217;, &#8216;nb_aliens&#8217;, default=0)
+{&#8216;movie&#8217;: &#8216;Bilbo&#8217;, &#8216;nb_aliens&#8217;: 0, &#8216;year&#8217;: 2014}</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.get_in">
+<tt class="descclassname">fntools.</tt><tt class="descname">get_in</tt><big>(</big><em>record</em>, <em>*keys</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/fntools.html#get_in"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.get_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value corresponding to the keys in a nested record</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;Lancelot&#39;</span><span class="p">,</span> <span class="s">&#39;actor&#39;</span><span class="p">:</span> <span class="s">&#39;John Cleese&#39;</span><span class="p">,</span> <span class="s">&#39;color&#39;</span><span class="p">:</span> <span class="s">&#39;blue&#39;</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">get_in</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">)</span>
+<span class="go">Lancelot</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">get_in</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;age&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&#39;?&#39;</span><span class="p">)</span>
+<span class="go">?</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.valuesof">
+<tt class="descclassname">fntools.</tt><tt class="descname">valuesof</tt><big>(</big><em>record</em>, <em>keys</em><big>)</big><a class="reference internal" href="_modules/fntools.html#valuesof"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.valuesof" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the values corresponding to the given keys</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">band</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;Metallica&#39;</span><span class="p">,</span> <span class="s">&#39;singer&#39;</span><span class="p">:</span> <span class="s">&#39;James Hetfield&#39;</span><span class="p">,</span> <span class="s">&#39;guitarist&#39;</span><span class="p">:</span> <span class="s">&#39;Kirk Hammet&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">valuesof</span><span class="p">(</span><span class="n">band</span><span class="p">,</span> <span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;date&#39;</span><span class="p">,</span> <span class="s">&#39;singer&#39;</span><span class="p">))</span>
+<span class="go">[&#39;Metallica&#39;, None, &#39;James Hetfield&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.valueof">
+<tt class="descclassname">fntools.</tt><tt class="descname">valueof</tt><big>(</big><em>records</em>, <em>key</em><big>)</big><a class="reference internal" href="_modules/fntools.html#valueof"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.valueof" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the value corresponding to the given key in all the dictionaries</p>
+<p># &gt;&gt;&gt; bands = [{&#8216;name&#8217;: &#8216;Led Zeppelin&#8217;, &#8216;singer&#8217;: &#8216;Robert Plant&#8217;, &#8216;guitarist&#8217;: &#8216;Jimmy Page&#8217;},
+# ....: {&#8216;name&#8217;: &#8216;Metallica&#8217;, &#8216;singer&#8217;: &#8216;James Hetfield&#8217;, &#8216;guitarist&#8217;: &#8216;Kirk Hammet&#8217;}]
+# &gt;&gt;&gt; print valueof(bands, &#8216;singer&#8217;)
+# [&#8216;Robert Plant&#8217;, &#8216;James Hetfield&#8217;]</p>
+</dd></dl>
+
+</div>
+<div class="section" id="creation">
+<h2>Creation<a class="headerlink" href="#creation" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="fntools.assoc">
+<tt class="descclassname">fntools.</tt><tt class="descname">assoc</tt><big>(</big><em>_d</em>, <em>key</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/fntools.html#assoc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.assoc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Associate a key with a value in a dictionary</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">movie</span> <span class="o">=</span> <span class="n">assoc</span><span class="p">({},</span> <span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;Holy Grail&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">movie</span>
+<span class="go">{&#39;name&#39;: &#39;Holy Grail&#39;}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.dispatch">
+<tt class="descclassname">fntools.</tt><tt class="descname">dispatch</tt><big>(</big><em>data</em>, <em>fns</em><big>)</big><a class="reference internal" href="_modules/fntools.html#dispatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.dispatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the functions on the data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; the data</li>
+<li><strong>fns</strong> &#8211; a list of functions</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">79</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">dispatch</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">))</span>
+<span class="go">[1, 79]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.multimap">
+<tt class="descclassname">fntools.</tt><tt class="descname">multimap</tt><big>(</big><em>fn</em>, <em>colls</em><big>)</big><a class="reference internal" href="_modules/fntools.html#multimap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.multimap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply a function on multiple collections</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">multimap</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)))</span>
+<span class="go">[5, 7, 9]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="n">z</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">multimap</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="inspection">
+<h2>Inspection<a class="headerlink" href="#inspection" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="fntools.isiterable">
+<tt class="descclassname">fntools.</tt><tt class="descname">isiterable</tt><big>(</big><em>coll</em><big>)</big><a class="reference internal" href="_modules/fntools.html#isiterable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.isiterable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the collection is any iterable except a string</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.are_in">
+<tt class="descclassname">fntools.</tt><tt class="descname">are_in</tt><big>(</big><em>items</em>, <em>collection</em><big>)</big><a class="reference internal" href="_modules/fntools.html#are_in"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.are_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True for each item in the collection</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">are_in</span><span class="p">([</span><span class="s">&#39;Terry&#39;</span><span class="p">,</span> <span class="s">&#39;James&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;Terry&#39;</span><span class="p">,</span> <span class="s">&#39;John&#39;</span><span class="p">,</span> <span class="s">&#39;Eric&#39;</span><span class="p">])</span>
+<span class="go">[True, False]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.any_in">
+<tt class="descclassname">fntools.</tt><tt class="descname">any_in</tt><big>(</big><em>items</em>, <em>collection</em><big>)</big><a class="reference internal" href="_modules/fntools.html#any_in"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.any_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if any of the items are in the collection</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>items</strong> &#8211; items that may be in the collection</li>
+<li><strong>collection</strong> &#8211; a collection</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">any_in</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">any_in</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">any_in</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.all_in">
+<tt class="descclassname">fntools.</tt><tt class="descname">all_in</tt><big>(</big><em>items</em>, <em>collection</em><big>)</big><a class="reference internal" href="_modules/fntools.html#all_in"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.all_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if all of the items are in the collection</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>items</strong> &#8211; items that may be in the collection</li>
+<li><strong>collection</strong> &#8211; a collection</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">all_in</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">all_in</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">all_in</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.occurrences">
+<tt class="descclassname">fntools.</tt><tt class="descname">occurrences</tt><big>(</big><em>coll</em>, <em>value=None</em><big>)</big><a class="reference internal" href="_modules/fntools.html#occurrences"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.occurrences" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the occurrences of the elements in the collection</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">occurrences</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="go">{1: 2, 2: 1, 3: 1}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">occurrences</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.indexof">
+<tt class="descclassname">fntools.</tt><tt class="descname">indexof</tt><big>(</big><em>coll</em>, <em>item</em>, <em>start=0</em>, <em>default=None</em><big>)</big><a class="reference internal" href="_modules/fntools.html#indexof"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.indexof" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the index of the item in the collection</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>coll</strong> &#8211; iterable</li>
+<li><strong>item</strong> &#8211; scalar</li>
+<li><strong>start</strong> &#8211; (optional) The start index</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body"><p class="first">The default value of the index if the item is not in the collection</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">idx &#8211; The index of the item in the collection</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.indexesof">
+<tt class="descclassname">fntools.</tt><tt class="descname">indexesof</tt><big>(</big><em>coll</em>, <em>item</em><big>)</big><a class="reference internal" href="_modules/fntools.html#indexesof"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.indexesof" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all the indexes of the item in the collection</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.issorted">
+<tt class="descclassname">fntools.</tt><tt class="descname">issorted</tt><big>(</big><em>coll</em><big>)</big><a class="reference internal" href="_modules/fntools.html#issorted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.issorted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if a collection is sorted</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>coll</strong> &#8211; a collection</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">1 if the collection is sorted (increasing)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">0 if it is not sorted</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">-1 if is sorted in reverse order (decreasing)</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">issorted</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">issorted</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">issorted</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="go">-1</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.attributes">
+<tt class="descclassname">fntools.</tt><tt class="descname">attributes</tt><big>(</big><em>data</em><big>)</big><a class="reference internal" href="_modules/fntools.html#attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all the non callable and non special attributes of the input data</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.find">
+<tt class="descclassname">fntools.</tt><tt class="descname">find</tt><big>(</big><em>fn</em>, <em>record</em><big>)</big><a class="reference internal" href="_modules/fntools.html#find"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8216;Apply a function on the record and return the corresponding new record</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">find</span><span class="p">(</span><span class="nb">max</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;Terry&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s">&#39;Graham&#39;</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span> <span class="s">&#39;John&#39;</span><span class="p">:</span> <span class="mi">27</span><span class="p">})</span> 
+<span class="go">{&#39;Graham&#39;: 35}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.dfilter">
+<tt class="descclassname">fntools.</tt><tt class="descname">dfilter</tt><big>(</big><em>fn</em>, <em>record</em><big>)</big><a class="reference internal" href="_modules/fntools.html#dfilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.dfilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>filter for a directory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fn</strong> &#8211; A predicate function</li>
+<li><strong>record</strong> &#8211; a dict</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">odd</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">dfilter</span><span class="p">(</span><span class="n">odd</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;Terry&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s">&#39;Graham&#39;</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span> <span class="s">&#39;John&#39;</span><span class="p">:</span> <span class="mi">27</span><span class="p">})</span>
+<span class="go">{&#39;John&#39;: 27, &#39;Graham&#39;: 35}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.count">
+<tt class="descclassname">fntools.</tt><tt class="descname">count</tt><big>(</big><em>fn</em>, <em>coll</em><big>)</big><a class="reference internal" href="_modules/fntools.html#count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the count of True values returned by the function applied to the
+collection</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">count</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="mi">11</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">15</span><span class="p">])</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.isdistinct">
+<tt class="descclassname">fntools.</tt><tt class="descname">isdistinct</tt><big>(</big><em>coll</em><big>)</big><a class="reference internal" href="_modules/fntools.html#isdistinct"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.isdistinct" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">isdistinct</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">isdistinct</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.struct">
+<tt class="descclassname">fntools.</tt><tt class="descname">struct</tt><big>(</big><em>coll</em><big>)</big><a class="reference internal" href="_modules/fntools.html#struct"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.struct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display the structure of the collection</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">struct</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="s">&quot;3&quot;</span><span class="p">])</span>
+<span class="go">list: 3 items</span>
+<span class="go">    - 1 int</span>
+<span class="go">    - 1 float</span>
+<span class="go">    - 1 str</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">band</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;Metallica&#39;</span><span class="p">,</span> <span class="s">&#39;singer&#39;</span><span class="p">:</span> <span class="s">&#39;James Hetfield&#39;</span><span class="p">,</span> <span class="s">&#39;guitarist&#39;</span><span class="p">:</span> <span class="s">&#39;Kirk Hammet&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">struct</span><span class="p">(</span><span class="n">band</span><span class="p">)</span>
+<span class="go">dict: 3 items</span>
+<span class="go">    - singer: str</span>
+<span class="go">    - guitarist: str</span>
+<span class="go">    - name: str</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, Taurus Olson.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

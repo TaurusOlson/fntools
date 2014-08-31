@@ -1,0 +1,13 @@
+Transformation
+==============
+
+.. currentmodule:: fntools
+
+.. autofunction:: zip_with
+.. autofunction:: concat
+.. autofunction:: flatten
+.. autofunction:: mapcat
+.. autofunction:: dmap
+.. autofunction:: compose
+.. autofunction:: groupby
+

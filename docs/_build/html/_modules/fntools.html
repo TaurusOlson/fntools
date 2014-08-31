@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fntools &mdash; fntools 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.1.0/flatly/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="fntools 1.0 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          fntools</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <h1>Source code for fntools</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;Functional programming tools for data processing</span>
+
+<span class="sd">`fntools` is a simple library providing the user with functional programming</span>
+<span class="sd">functions to transform, filter, create and inspect Python data structures.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+
+
+<span class="c"># TRANSFORMATION {{{1</span>
+
+<div class="viewcode-block" id="zip_with"><a class="viewcode-back" href="../api.html#fntools.zip_with">[docs]</a><span class="k">def</span> <span class="nf">zip_with</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="o">*</span><span class="n">colls</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the result of the function applied on the zip of the collections</span>
+
+<span class="sd">    :param f: a function</span>
+<span class="sd">    :param colls: collections</span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; print list(zip_with(lambda x, y: x-y, [10, 20, 30], [42, 19, 43]))</span>
+<span class="sd">    [-32, 1, -13]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">itertools</span><span class="o">.</span><span class="n">starmap</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="o">*</span><span class="n">colls</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="concat"><a class="viewcode-back" href="../api.html#fntools.concat">[docs]</a><span class="k">def</span> <span class="nf">concat</span><span class="p">(</span><span class="n">colls</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Concatenate a list of collections </span>
+
+<span class="sd">    :param colls: a list of collections</span>
+<span class="sd">    :returns: the concatenation of the collections</span>
+
+<span class="sd">    &gt;&gt;&gt; print concat(([1, 2], [3, 4]))</span>
+<span class="sd">    [1, 2, 3, 4]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">colls</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="mapcat"><a class="viewcode-back" href="../api.html#fntools.mapcat">[docs]</a><span class="k">def</span> <span class="nf">mapcat</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">colls</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Concatenate the result of a map</span>
+<span class="sd">    </span>
+<span class="sd">    :param fn: a function</span>
+<span class="sd">    :param colls: a list of collections</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">concat</span><span class="p">(</span><span class="n">colls</span><span class="p">))</span>
+
+
+<span class="c"># TODO Fix and test dmap</span></div>
+<div class="viewcode-block" id="dmap"><a class="viewcode-back" href="../api.html#fntools.dmap">[docs]</a><span class="k">def</span> <span class="nf">dmap</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;map for a directory</span>
+<span class="sd">    </span>
+<span class="sd">    :param fn: a function</span>
+<span class="sd">    :param record: a dictionary</span>
+<span class="sd">    :returns: a dictionary</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">(</span><span class="n">fn</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">record</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">values</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="compose"><a class="viewcode-back" href="../api.html#fntools.compose">[docs]</a><span class="k">def</span> <span class="nf">compose</span><span class="p">(</span><span class="o">*</span><span class="n">fns</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the function composed with the given functions</span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; add2 = lambda x: x+2</span>
+<span class="sd">    &gt;&gt;&gt; mult3 = lambda x: x*3</span>
+<span class="sd">    &gt;&gt;&gt; new_fn = compose(add2, mult3)</span>
+<span class="sd">    &gt;&gt;&gt; print new_fn(2)</span>
+<span class="sd">    8</span>
+
+<span class="sd">    .. note:: compose(fn1, fn2, fn3) is the same as fn1(fn2(fn3))</span>
+<span class="sd">       which means that the last function provided is the first to be applied.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">compose2</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
+        <span class="k">return</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">f</span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">reduce</span><span class="p">(</span><span class="n">compose2</span><span class="p">,</span> <span class="n">fns</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="groupby"><a class="viewcode-back" href="../api.html#fntools.groupby">[docs]</a><span class="k">def</span> <span class="nf">groupby</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">sample</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Group elements in sub-samples by f</span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; print groupby(len, [&#39;John&#39;, &#39;Terry&#39;, &#39;Eric&#39;, &#39;Graham&#39;, &#39;Mickael&#39;])</span>
+<span class="sd">    {4: [&#39;John&#39;, &#39;Eric&#39;], 5: [&#39;Terry&#39;], 6: [&#39;Graham&#39;], 7: [&#39;Mickael&#39;]}</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sample</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="n">d</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="reductions"><a class="viewcode-back" href="../api.html#fntools.reductions">[docs]</a><span class="k">def</span> <span class="nf">reductions</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">acc</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the intermediate values of a reduction</span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; print reductions(lambda x, y: x + y, [1, 2, 3])</span>
+<span class="sd">    [1, 3, 6]</span>
+
+<span class="sd">    &gt;&gt;&gt; print reductions(lambda x, y: x + y, [1, 2, 3], 10)</span>
+<span class="sd">    [11, 13, 16]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">indexes</span> <span class="o">=</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">acc</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">seq</span><span class="p">[:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">acc</span><span class="p">),</span> <span class="n">indexes</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">seq</span><span class="p">[:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]),</span> <span class="n">indexes</span><span class="p">)</span> 
+</div>
+<div class="viewcode-block" id="split"><a class="viewcode-back" href="../api.html#fntools.split">[docs]</a><span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="n">coll</span><span class="p">,</span> <span class="n">factor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Split a collection by using a factor</span>
+
+<span class="sd">    &gt;&gt;&gt; bands = (&#39;Led Zeppelin&#39;, &#39;Debussy&#39;, &#39;Metallica&#39;, &#39;Iron Maiden&#39;, &#39;Bach&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; styles = (&#39;rock&#39;, &#39;classic&#39;, &#39;rock&#39;, &#39;rock&#39;, &#39;classic&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; split(bands, styles)</span>
+<span class="sd">    {&#39;classic&#39;: [&#39;Debussy&#39;, &#39;Bach&#39;],</span>
+<span class="sd">     &#39;rock&#39;: [&#39;Led Zeppelin&#39;, &#39;Metallica&#39;, &#39;Iron Maiden&#39;]}</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">groups</span> <span class="o">=</span> <span class="n">groupby</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">factor</span><span class="p">,</span> <span class="n">coll</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">dmap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">x</span><span class="p">],</span> <span class="n">groups</span><span class="p">)</span>
+
+
+<span class="c"># FILTERING  {{{1</span>
+</div>
+<div class="viewcode-block" id="duplicates"><a class="viewcode-back" href="../api.html#fntools.duplicates">[docs]</a><span class="k">def</span> <span class="nf">duplicates</span><span class="p">(</span><span class="n">coll</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the duplicated items in the given collection&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">coll</span> <span class="k">if</span> <span class="n">coll</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">))</span>
+    
+</div>
+<div class="viewcode-block" id="pluck"><a class="viewcode-back" href="../api.html#fntools.pluck">[docs]</a><span class="k">def</span> <span class="nf">pluck</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="o">*</span><span class="n">keys</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    &gt;&gt;&gt; d = {&#39;name&#39;: &#39;Lancelot&#39;, &#39;actor&#39;: &#39;John Cleese&#39;, &#39;color&#39;: &#39;blue&#39;}</span>
+<span class="sd">    &gt;&gt;&gt; print pluck(d, &#39;name&#39;, &#39;color&#39;)</span>
+<span class="sd">    {&#39;color&#39;: &#39;blue&#39;, &#39;name&#39;: &#39;Lancelot&#39;}</span>
+
+<span class="sd">    # the keyword &#39;default&#39; allows to replace a None value</span>
+<span class="sd">    &gt;&gt;&gt; d = {&#39;year&#39;: 2014, &#39;movie&#39;: &#39;Bilbo&#39;}</span>
+<span class="sd">    &gt;&gt;&gt; print pluck(d, &#39;year&#39;, &#39;movie&#39;, &#39;nb_aliens&#39;, default=0)</span>
+<span class="sd">    {&#39;movie&#39;: &#39;Bilbo&#39;, &#39;nb_aliens&#39;: 0, &#39;year&#39;: 2014}</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">default</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;default&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">assoc</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">default</span><span class="p">)),</span> <span class="n">keys</span><span class="p">,</span> <span class="p">{})</span>
+
+</div>
+<div class="viewcode-block" id="get_in"><a class="viewcode-back" href="../api.html#fntools.get_in">[docs]</a><span class="k">def</span> <span class="nf">get_in</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="o">*</span><span class="n">keys</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the value corresponding to the keys in a nested record</span>
+
+<span class="sd">    &gt;&gt;&gt; d = {&#39;id&#39;: {&#39;name&#39;: &#39;Lancelot&#39;, &#39;actor&#39;: &#39;John Cleese&#39;, &#39;color&#39;: &#39;blue&#39;}}</span>
+<span class="sd">    &gt;&gt;&gt; print get_in(d, &#39;id&#39;, &#39;name&#39;)</span>
+<span class="sd">    Lancelot</span>
+
+<span class="sd">    &gt;&gt;&gt; print get_in(d, &#39;id&#39;, &#39;age&#39;, default=&#39;?&#39;)</span>
+<span class="sd">    ?</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">default</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;default&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">a</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">default</span><span class="p">),</span> <span class="n">keys</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="valuesof"><a class="viewcode-back" href="../api.html#fntools.valuesof">[docs]</a><span class="k">def</span> <span class="nf">valuesof</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">keys</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the values corresponding to the given keys</span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; band = {&#39;name&#39;: &#39;Metallica&#39;, &#39;singer&#39;: &#39;James Hetfield&#39;, &#39;guitarist&#39;: &#39;Kirk Hammet&#39;}</span>
+<span class="sd">    &gt;&gt;&gt; print valuesof(band, (&#39;name&#39;, &#39;date&#39;, &#39;singer&#39;))</span>
+<span class="sd">    [&#39;Metallica&#39;, None, &#39;James Hetfield&#39;]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">isiterable</span><span class="p">(</span><span class="n">keys</span><span class="p">):</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">keys</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">,</span> <span class="n">keys</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="valueof"><a class="viewcode-back" href="../api.html#fntools.valueof">[docs]</a><span class="k">def</span> <span class="nf">valueof</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Extract the value corresponding to the given key in all the dictionaries</span>
+
+<span class="sd">    # &gt;&gt;&gt; bands = [{&#39;name&#39;: &#39;Led Zeppelin&#39;, &#39;singer&#39;: &#39;Robert Plant&#39;, &#39;guitarist&#39;: &#39;Jimmy Page&#39;},</span>
+<span class="sd">    # ....: {&#39;name&#39;: &#39;Metallica&#39;, &#39;singer&#39;: &#39;James Hetfield&#39;, &#39;guitarist&#39;: &#39;Kirk Hammet&#39;}]</span>
+<span class="sd">    # &gt;&gt;&gt; print valueof(bands, &#39;singer&#39;)</span>
+<span class="sd">    # [&#39;Robert Plant&#39;, &#39;James Hetfield&#39;]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">records</span> <span class="o">=</span> <span class="p">[</span><span class="n">records</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">itemgetter</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">records</span><span class="p">)</span>
+
+
+<span class="c"># CREATION {{{1</span>
+</div>
+<div class="viewcode-block" id="assoc"><a class="viewcode-back" href="../api.html#fntools.assoc">[docs]</a><span class="k">def</span> <span class="nf">assoc</span><span class="p">(</span><span class="n">_d</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Associate a key with a value in a dictionary</span>
+
+<span class="sd">    &gt;&gt;&gt; movie = assoc({}, &#39;name&#39;, &#39;Holy Grail&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; print movie</span>
+<span class="sd">    {&#39;name&#39;: &#39;Holy Grail&#39;}</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">_d</span><span class="p">)</span>
+    <span class="n">d</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">return</span> <span class="n">d</span>
+
+</div>
+<div class="viewcode-block" id="dispatch"><a class="viewcode-back" href="../api.html#fntools.dispatch">[docs]</a><span class="k">def</span> <span class="nf">dispatch</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">fns</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Apply the functions on the data</span>
+<span class="sd">    </span>
+<span class="sd">    :param data: the data</span>
+<span class="sd">    :param fns: a list of functions </span>
+
+<span class="sd">    &gt;&gt;&gt; x = (1, 42, 5, 79)</span>
+<span class="sd">    &gt;&gt;&gt; print dispatch(x, (min, max))</span>
+<span class="sd">    [1, 79]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">fn</span><span class="p">:</span> <span class="n">fn</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">fns</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="multimap"><a class="viewcode-back" href="../api.html#fntools.multimap">[docs]</a><span class="k">def</span> <span class="nf">multimap</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">colls</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Apply a function on multiple collections</span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; print multimap(operator.add, ((1, 2, 3), (4, 5, 6)))</span>
+<span class="sd">    [5, 7, 9]</span>
+
+<span class="sd">    &gt;&gt;&gt; f = lambda x, y, z: 2*x + 3*y - z</span>
+<span class="sd">    &gt;&gt;&gt; result = multimap(f, ((1, 2), (4, 1), (1, 1)))</span>
+<span class="sd">    &gt;&gt;&gt; result[0] == f(1, 4, 1)</span>
+<span class="sd">    &gt;&gt;&gt; result[1] == f(2, 1, 1)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">starmap</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">colls</span><span class="p">)))</span>
+
+
+<span class="c"># INSPECTION {{{1</span>
+</div>
+<div class="viewcode-block" id="isiterable"><a class="viewcode-back" href="../api.html#fntools.isiterable">[docs]</a><span class="k">def</span> <span class="nf">isiterable</span><span class="p">(</span><span class="n">coll</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return True if the collection is any iterable except a string&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">coll</span><span class="p">,</span> <span class="s">&quot;__iter__&quot;</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="are_in"><a class="viewcode-back" href="../api.html#fntools.are_in">[docs]</a><span class="k">def</span> <span class="nf">are_in</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">collection</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return True for each item in the collection</span>
+
+<span class="sd">    &gt;&gt;&gt; print are_in([&#39;Terry&#39;, &#39;James&#39;], [&#39;Terry&#39;, &#39;John&#39;, &#39;Eric&#39;])</span>
+<span class="sd">    [True, False]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="p">)</span>
+    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">collection</span><span class="p">,</span> <span class="n">items</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="any_in"><a class="viewcode-back" href="../api.html#fntools.any_in">[docs]</a><span class="k">def</span> <span class="nf">any_in</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">collection</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return True if any of the items are in the collection</span>
+
+<span class="sd">    :param items: items that may be in the collection</span>
+<span class="sd">    :param collection: a collection </span>
+
+<span class="sd">    &gt;&gt;&gt; print any_in(2, [1, 3, 2])</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; print any_in([1, 2], [1, 3, 2])</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; print any_in([1, 2], [1, 3])</span>
+<span class="sd">    True</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">are_in</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">collection</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="all_in"><a class="viewcode-back" href="../api.html#fntools.all_in">[docs]</a><span class="k">def</span> <span class="nf">all_in</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">collection</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return True if all of the items are in the collection</span>
+
+<span class="sd">    :param items: items that may be in the collection</span>
+<span class="sd">    :param collection: a collection </span>
+
+<span class="sd">    &gt;&gt;&gt; print all_in(2, [1, 3, 2])</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; print all_in([1, 2], [1, 3, 2])</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; print all_in([1, 2], [1, 3])</span>
+<span class="sd">    False</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">are_in</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">collection</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="issorted"><a class="viewcode-back" href="../api.html#fntools.issorted">[docs]</a><span class="k">def</span> <span class="nf">issorted</span><span class="p">(</span><span class="n">coll</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Determine if a collection is sorted</span>
+
+<span class="sd">    :param coll: a collection</span>
+<span class="sd">    </span>
+<span class="sd">    :returns: 1 if the collection is sorted (increasing)</span>
+<span class="sd">    :returns: 0 if it is not sorted </span>
+<span class="sd">    :returns: -1 if is sorted in reverse order (decreasing)</span>
+
+<span class="sd">    &gt;&gt;&gt; issorted([1, 2, 3])</span>
+<span class="sd">    1</span>
+<span class="sd">    &gt;&gt;&gt; issorted([1, 3, 2])</span>
+<span class="sd">    0</span>
+<span class="sd">    &gt;&gt;&gt; issorted([3, 2, 1])</span>
+<span class="sd">    -1</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">coll</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">coll</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">coll</span> <span class="o">==</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">coll</span><span class="p">))):</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+</div>
+<div class="viewcode-block" id="attributes"><a class="viewcode-back" href="../api.html#fntools.attributes">[docs]</a><span class="k">def</span> <span class="nf">attributes</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return all the non callable and non special attributes of the input data&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;__&#39;</span><span class="p">)]</span>
+
+</div>
+<div class="viewcode-block" id="find"><a class="viewcode-back" href="../api.html#fntools.find">[docs]</a><span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;&#39;Apply a function on the record and return the corresponding new record</span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; print find(max, {&#39;Terry&#39;: 30, &#39;Graham&#39;: 35, &#39;John&#39;: 27}) </span>
+<span class="sd">    {&#39;Graham&#39;: 35}</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">values_result</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="n">keys_result</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">record</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="n">values_result</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">keys_result</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">values_result</span><span class="p">}</span>
+
+</div>
+<div class="viewcode-block" id="dfilter"><a class="viewcode-back" href="../api.html#fntools.dfilter">[docs]</a><span class="k">def</span> <span class="nf">dfilter</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;filter for a directory</span>
+<span class="sd">   </span>
+<span class="sd">    :param fn: A predicate function</span>
+<span class="sd">    :param record: a dict</span>
+<span class="sd">    :returns: a dict</span>
+
+<span class="sd">    &gt;&gt;&gt; odd = lambda x: x % 2 != 0</span>
+<span class="sd">    &gt;&gt;&gt; print dfilter(odd, {&#39;Terry&#39;: 30, &#39;Graham&#39;: 35, &#39;John&#39;: 27})</span>
+<span class="sd">    {&#39;John&#39;: 27, &#39;Graham&#39;: 35}</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">record</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">fn</span><span class="p">(</span><span class="n">v</span><span class="p">)])</span>
+
+</div>
+<div class="viewcode-block" id="occurrences"><a class="viewcode-back" href="../api.html#fntools.occurrences">[docs]</a><span class="k">def</span> <span class="nf">occurrences</span><span class="p">(</span><span class="n">coll</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the occurrences of the elements in the collection</span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; print occurrences((1, 1, 2, 3))</span>
+<span class="sd">    {1: 2, 2: 1, 3: 1}</span>
+<span class="sd">    &gt;&gt;&gt; print occurrences((1, 1, 2, 3), 1)</span>
+<span class="sd">    2</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">coll</span><span class="p">:</span>
+        <span class="n">count</span><span class="p">[</span><span class="n">element</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    
+    <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="n">count</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">count</span>
+
+</div>
+<div class="viewcode-block" id="indexof"><a class="viewcode-back" href="../api.html#fntools.indexof">[docs]</a><span class="k">def</span> <span class="nf">indexof</span><span class="p">(</span><span class="n">coll</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the index of the item in the collection</span>
+<span class="sd">    </span>
+<span class="sd">    :param coll: iterable</span>
+<span class="sd">    :param item: scalar</span>
+<span class="sd">    :param start: (optional) The start index</span>
+<span class="sd">    :default: The default value of the index if the item is not in the collection</span>
+
+<span class="sd">    :returns: idx -- The index of the item in the collection</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">coll</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">coll</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">start</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">default</span>
+    
+</div>
+<div class="viewcode-block" id="indexesof"><a class="viewcode-back" href="../api.html#fntools.indexesof">[docs]</a><span class="k">def</span> <span class="nf">indexesof</span><span class="p">(</span><span class="n">coll</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return all the indexes of the item in the collection&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">indexof</span><span class="p">(</span><span class="n">coll</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">coll</span><span class="p">))</span> <span class="k">if</span> <span class="n">coll</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">item</span><span class="p">]</span>
+
+</div>
+<div class="viewcode-block" id="count"><a class="viewcode-back" href="../api.html#fntools.count">[docs]</a><span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">coll</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the count of True values returned by the function applied to the</span>
+<span class="sd">    collection</span>
+
+<span class="sd">    &gt;&gt;&gt; count(lambda x: x % 2 == 0, [11, 22, 31, 24, 15])</span>
+<span class="sd">    2</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">coll</span> <span class="k">if</span> <span class="n">fn</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="bp">True</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="isdistinct"><a class="viewcode-back" href="../api.html#fntools.isdistinct">[docs]</a><span class="k">def</span> <span class="nf">isdistinct</span><span class="p">(</span><span class="n">coll</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &gt;&gt;&gt; isdistinct([1, 2, 3])</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; isdistinct([1, 2, 2])</span>
+<span class="sd">    False</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">most_common</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">coll</span><span class="p">)</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="ow">not</span> <span class="n">most_common</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span>
+
+
+<span class="c"># TODO Use recursion for nested collections</span></div>
+<div class="viewcode-block" id="struct"><a class="viewcode-back" href="../api.html#fntools.struct">[docs]</a><span class="k">def</span> <span class="nf">struct</span><span class="p">(</span><span class="n">coll</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Display the structure of the collection</span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; print struct([1, 2.0, &quot;3&quot;])</span>
+<span class="sd">    list: 3 items</span>
+<span class="sd">        - 1 int</span>
+<span class="sd">        - 1 float</span>
+<span class="sd">        - 1 str</span>
+
+<span class="sd">    &gt;&gt;&gt; band = {&#39;name&#39;: &#39;Metallica&#39;, &#39;singer&#39;: &#39;James Hetfield&#39;, &#39;guitarist&#39;: &#39;Kirk Hammet&#39;}</span>
+<span class="sd">    &gt;&gt;&gt; struct(band)</span>
+<span class="sd">    dict: 3 items</span>
+<span class="sd">        - singer: str</span>
+<span class="sd">        - guitarist: str</span>
+<span class="sd">        - name: str</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">max_nb</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">5</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">n</span>
+
+    <span class="c"># List</span>
+    <span class="k">if</span> <span class="n">isiterable</span><span class="p">(</span><span class="n">coll</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coll</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">: </span><span class="si">%d</span><span class="s"> items&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">coll</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">coll</span><span class="p">))</span>
+        <span class="k">print</span> <span class="n">s</span>
+
+    <span class="c"># Dictionnary</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coll</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">: </span><span class="si">%d</span><span class="s"> items&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">coll</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">coll</span><span class="p">))</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">max_nb</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">coll</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s">&quot;</span><span class="se">\n\t</span><span class="s">keys: </span><span class="si">%r</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">coll</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="n">n</span><span class="p">]</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s">&quot;</span><span class="se">\n\t</span><span class="s">values: </span><span class="si">%r</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">coll</span><span class="o">.</span><span class="n">values</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="n">n</span><span class="p">]</span>
+        <span class="k">print</span> <span class="n">s</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;Can&#39;t analyze </span><span class="si">%s</span><span class="s"> structure.&quot;</span> <span class="o">%</span> <span class="n">coll</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+</pre></div></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, Taurus Olson.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

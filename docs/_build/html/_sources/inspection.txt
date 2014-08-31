@@ -1,0 +1,16 @@
+Inspection
+==========
+
+.. currentmodule:: fntools
+
+.. autofunction:: are_in
+.. autofunction:: any_in
+.. autofunction:: all_in
+.. autofunction:: occurrences
+.. autofunction:: indexof
+.. autofunction:: indexesof
+.. autofunction:: issorted
+.. autofunction:: attributes
+.. autofunction:: find
+
+

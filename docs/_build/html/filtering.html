@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Filtering &mdash; fntools 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.1.0/flatly/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="fntools 1.0 documentation" href="index.html" />
+    <link rel="next" title="Creation" href="creation.html" />
+    <link rel="prev" title="Transformation" href="transformation.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          fntools</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="transformation.html">Transformation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Filtering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="creation.html">Creation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inspection.html">Inspection</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Filtering</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="transformation.html" title="Previous Chapter: Transformation"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm">&laquo; Transformation</span>
+    </a>
+  </li>
+  <li>
+    <a href="creation.html" title="Next Chapter: Creation"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm">Creation &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/filtering.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="filtering">
+<h1>Filtering<a class="headerlink" href="#filtering" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="fntools.duplicates">
+<tt class="descclassname">fntools.</tt><tt class="descname">duplicates</tt><big>(</big><em>coll</em><big>)</big><a class="reference internal" href="_modules/fntools.html#duplicates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.duplicates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the duplicated items in the given collection</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.pluck">
+<tt class="descclassname">fntools.</tt><tt class="descname">pluck</tt><big>(</big><em>record</em>, <em>*keys</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/fntools.html#pluck"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.pluck" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Lancelot&quot;</span><span class="p">,</span> <span class="s">&quot;actor&quot;</span><span class="p">:</span> <span class="s">&quot;John Cleese&quot;</span><span class="p">,</span> <span class="s">&quot;color&quot;</span><span class="p">:</span> <span class="s">&quot;blue&quot;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">pluck</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;color&quot;</span><span class="p">)</span>
+<span class="go">{&quot;name&quot;: &quot;Lancelot&quot;, &quot;color&quot;: &quot;blue&quot;}</span>
+</pre></div>
+</div>
+<p># the keyword &#8220;default&#8221; allows to replace a None value
+&gt;&gt;&gt; d = {&#8220;year&#8221;: 2014, &#8220;movie&#8221;: &#8220;Bilbo&#8221;}
+&gt;&gt;&gt; print pluck(d, &#8220;year&#8221;, &#8220;movie&#8221;, &#8220;nb_aliens&#8221;, default=0)
+{&#8220;year&#8221;: 2014, &#8220;movie&#8221;: &#8220;Bilbo&#8221;, &#8220;nb_aliens&#8221;: 0}</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.extract_values">
+<tt class="descclassname">fntools.</tt><tt class="descname">extract_values</tt><big>(</big><em>record</em>, <em>keys</em><big>)</big><a class="reference internal" href="_modules/fntools.html#extract_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.extract_values" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="fntools.extract_from_key">
+<tt class="descclassname">fntools.</tt><tt class="descname">extract_from_key</tt><big>(</big><em>records</em>, <em>key</em><big>)</big><a class="reference internal" href="_modules/fntools.html#extract_from_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.extract_from_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the value corresponding to the given key in all the dictionaries</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">bands</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Led Zeppelin&quot;</span><span class="p">,</span> <span class="s">&quot;singer&quot;</span><span class="p">:</span> <span class="s">&quot;Robert Plant&quot;</span><span class="p">,</span> <span class="s">&quot;guitarist&quot;</span><span class="p">:</span> <span class="s">&quot;Jimmy Page&quot;</span><span class="p">},</span>
+<span class="go">....: {&quot;name&quot;: &quot;Metallica&quot;, &quot;singer&quot;: &quot;James Hetfield&quot;, &quot;guitarist&quot;: &quot;Kirk Hammet&quot;}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">extract_from_key</span><span class="p">(</span><span class="n">bands</span><span class="p">,</span> <span class="s">&quot;singer&quot;</span><span class="p">)</span>
+<span class="go">[&quot;Robert Plant&quot;, &quot;James Hetfield&quot;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.select_value">
+<tt class="descclassname">fntools.</tt><tt class="descname">select_value</tt><big>(</big><em>func</em>, <em>record</em><big>)</big><a class="reference internal" href="_modules/fntools.html#select_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.select_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a record satisfying the input predicate function on the value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>func</strong> &#8211; A predicate function</li>
+<li><strong>record</strong> &#8211; a dict</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">odd</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">select</span><span class="p">(</span><span class="n">odd</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;Terry&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s">&quot;Graham&quot;</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span> <span class="s">&quot;John&quot;</span><span class="p">:</span> <span class="mi">27</span><span class="p">})</span>
+<span class="go">{&quot;John&quot;: 27, &quot;Graham&quot;: 35}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="fntools.select_key">
+<tt class="descclassname">fntools.</tt><tt class="descname">select_key</tt><big>(</big><em>func</em>, <em>record</em><big>)</big><a class="reference internal" href="_modules/fntools.html#select_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fntools.select_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a record satisfying the input predicate function on the key</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>func</strong> &#8211; A predicate function</li>
+<li><strong>record</strong> &#8211; a dict</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">odd</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">select</span><span class="p">(</span><span class="n">odd</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;Terry&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s">&quot;Graham&quot;</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span> <span class="s">&quot;John&quot;</span><span class="p">:</span> <span class="mi">27</span><span class="p">})</span>
+<span class="go">{&quot;John&quot;: 27, &quot;Graham&quot;: 35}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, Taurus Olson.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
