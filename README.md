@@ -1,14 +1,13 @@
 # fntools
 
----
 
 [![Documentation Status](https://readthedocs.org/projects/fntools/badge/?version=master)](https://readthedocs.org/projects/fntools/?badge=master)
 
-Functional programming tools for data processing. This module is a set of
+**fntools** provides functional programming tools for data processing. This module is a set of
 functions that I needed in my work and found useful.
 
 
-## Inpsirations
+## Inspirations
 
 * The excellent [toolz][toolz] by [Matthew Rocklin][mrocklin]
 * [A pratical introduction to functional programming][functional_programming] by [Mary Rose Cook][maryrosecook]
