@@ -11,8 +11,9 @@ fntools's documentation
 .. toctree::
    :maxdepth: 2
    
-   quickstart
    api
+
+.. quickstart
 
 Indices and tables
 ==================
