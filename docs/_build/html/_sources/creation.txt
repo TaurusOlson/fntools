@@ -1,7 +1,0 @@
-Creation
-========
-
-.. currentmodule:: fntools
-
-.. autofunction:: assoc
-.. autofunction:: dispatch
