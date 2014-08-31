@@ -1,7 +1,11 @@
 # fntools
 
+---
+
+[![Documentation Status](https://readthedocs.org/projects/fntools/badge/?version=master)](https://readthedocs.org/projects/fntools/?badge=master)
+
 Functional programming tools for data processing. This module is a set of
-functions that I needed in my work and found useful. 
+functions that I needed in my work and found useful.
 
 
 ## Inpsirations
