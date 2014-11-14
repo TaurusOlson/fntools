@@ -10,6 +10,7 @@ from copy import deepcopy
 import itertools
 import operator
 import collections
+from functools import wraps
 
 
 # TRANSFORMATION {{{1
@@ -293,6 +294,23 @@ def multimap(fn, colls):
     return list(itertools.starmap(fn, zip(*colls)))
 
 
+def pipe(data, *fns):
+    """Apply functions recursively on your data
+
+    >>> inc = lambda x: x + 1
+    >>> pipe(42, inc, str) 
+    '43'
+    """
+    return reduce(lambda acc, f: f(acc), fns, data)
+
+
+def pipe_each(coll, *fns):
+    """Apply functions recursively on your collection of data
+
+    """
+    return map(lambda x: pipe(x, *fns), coll)
+
+
 # INSPECTION {{{1
 
 def isiterable(coll):
@@ -464,3 +482,28 @@ def isdistinct(coll):
     """
     most_common = collections.Counter(coll).most_common(1)
     return not most_common[0][1] > 1
+
+
+def shift(func, *args, **kwargs):
+    """This function is basically a beefed up lambda x: func(x, *args, **kwargs)
+    
+    `shift` comes in handy when it is used in a pipeline with a function that
+    needs the passed value as its first argument.
+
+    >>> def div(x, y): return float(x) / y
+
+    # This is equivalent to div(42, 2):
+    >>> shift(div, 2)(42)
+    21.0
+
+    # which is different from div(2, 42):
+    >>> partial(div, 2)(42)
+    0.047619047619047616
+
+    """
+    @wraps(func)
+    def wrapped(x):
+        return func(x, *args, **kwargs)
+    return wrapped
+
+
