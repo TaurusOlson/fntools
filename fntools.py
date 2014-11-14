@@ -346,26 +346,26 @@ def all_in(items, collection):
     return all(are_in(items, collection))
 
 
-def issorted(coll):
-    """Determine if a collection is sorted
+def monotony(seq):
+    """Determine the monotony of a sequence
 
-    :param coll: a collection
+    :param seq: a sequence
 
-    :returns: 1 if the collection is sorted (increasing)
+    :returns: 1 if the sequence is sorted (increasing)
     :returns: 0 if it is not sorted
-    :returns: -1 if is sorted in reverse order (decreasing)
+    :returns: -1 if it is sorted in reverse order (decreasing)
 
-    >>> issorted([1, 2, 3])
+    >>> monotony([1, 2, 3])
     1
-    >>> issorted([1, 3, 2])
+    >>> monotony([1, 3, 2])
     0
-    >>> issorted([3, 2, 1])
+    >>> monotony([3, 2, 1])
     -1
 
     """
-    if coll == sorted(coll):
+    if seq == sorted(seq):
         return 1
-    elif coll == list(reversed(sorted(coll))):
+    elif seq == list(reversed(sorted(seq))):
         return -1
     else:
         return 0
