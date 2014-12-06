@@ -1,3 +1,13 @@
+
+1.0.2 / 2014-12-06
+==================
+
+  * Minor fix
+  * Minor fix in README.md
+  * Change README.md to README.rst
+  * Add __init__.py
+  * Add history
+
 1.0.1 / 2014-12-06
 ==================
 
