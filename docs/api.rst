@@ -41,7 +41,6 @@ Filtering
 .. autofunction:: find
 
 
-
 Inspection
 ----------
 

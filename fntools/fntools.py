@@ -1,7 +1,7 @@
 """Functional programming tools for data processing
 
 `fntools` is a simple library providing the user with functional programming
-functions to transform, filter, create and inspect Python data structures.
+functions to transform, filter and inspect Python data structures.
 
 """
 
