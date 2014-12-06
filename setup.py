@@ -6,7 +6,7 @@ setup(name='fntools',
       author=u'Taurus Olson',
       author_email=u'taurusolson@gmail.com',
       url='https://github.com/TaurusOlson/fntools',
-      version='1.0.2',
+      version='1.0.3',
       packages=['fntools'],
       zip_safe=False
       )
