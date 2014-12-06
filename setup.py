@@ -7,7 +7,6 @@ setup(name='fntools',
       author_email=u'taurusolson@gmail.com',
       url='https://github.com/TaurusOlson/fntools',
       version='1.0.2',
-      py_modules=['fntools'],
       packages=['fntools'],
       zip_safe=False
       )
