@@ -3,8 +3,13 @@
 
 [![Documentation Status](https://readthedocs.org/projects/fntools/badge/?version=master)](https://readthedocs.org/projects/fntools/?badge=master)
 
-**fntools** provides functional programming tools for data processing. This module is a set of
-functions that I needed in my work and found useful.
+**fntools** provides functional programming tools for data processing. This
+module is a set of functions that I needed in my work and found useful.
+
+
+# Installation
+
+    pip install fntools
 
 
 ## Inspirations
