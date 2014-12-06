@@ -1,10 +1,4 @@
-from codecs import open as codecs_open
 from setuptools import setup
-
-
-# Get the long description from the relevant file
-with codecs_open('README.md', encoding='utf-8') as f:
-    long_description = f.read()
 
 
 setup(name='fntools',
