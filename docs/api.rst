@@ -5,7 +5,6 @@ API
 
 * Transformation_
 * Filtering_
-* Creation_
 * Inspection_
 
 
@@ -25,6 +24,9 @@ Transformation
 .. autofunction:: groupby
 .. autofunction:: reductions
 .. autofunction:: split
+.. autofunction:: assoc
+.. autofunction:: dispatch
+.. autofunction:: multimap
 
 
 Filtering
@@ -35,14 +37,9 @@ Filtering
 .. autofunction:: get_in
 .. autofunction:: valuesof
 .. autofunction:: valueof
+.. autofunction:: dfilter
+.. autofunction:: find
 
-
-Creation
---------
-
-.. autofunction:: assoc
-.. autofunction:: dispatch
-.. autofunction:: multimap
 
 
 Inspection
@@ -55,12 +52,9 @@ Inspection
 .. autofunction:: occurrences
 .. autofunction:: indexof
 .. autofunction:: indexesof
-.. autofunction:: issorted
+.. autofunction:: monotony
 .. autofunction:: attributes
-.. autofunction:: find
-.. autofunction:: dfilter
 .. autofunction:: count
 .. autofunction:: isdistinct
-.. autofunction:: struct
 
 

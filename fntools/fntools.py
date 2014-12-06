@@ -15,20 +15,6 @@ from functools import wraps
 
 # TRANSFORMATION {{{1
 
-# def iterate(fn, *args):
-#     """Repeat iteratively a function 
-    
-#     >>> inc = lambda x: x + 1
-#     >>> result = iterate(inc, 10)
-#     >>> result.next()
-#     11
-#     >>> result.next()
-#     12
-
-#     """
-#     return reduce(lambda x, f: fn(*args), )
-
-
 def use_with(data, fn, *attrs):
     """
     # Let's create some data first
@@ -161,6 +147,90 @@ def split(coll, factor):
     return dmap(lambda x: [y[1] for y in x], groups)
 
 
+def assoc(_d, key, value):
+    """Associate a key with a value in a dictionary
+
+    >>> movie = assoc({}, 'name', 'Holy Grail')
+    >>> print movie
+    {'name': 'Holy Grail'}
+
+    """
+    d = deepcopy(_d)
+    d[key] = value
+    return d
+
+
+def dispatch(data, fns):
+    """Apply the functions on the data
+
+    :param data: the data
+    :param fns: a list of functions
+
+    >>> x = (1, 42, 5, 79)
+    >>> print dispatch(x, (min, max))
+    [1, 79]
+
+    """
+    return map(lambda fn: fn(data), fns)
+
+
+def multimap(fn, colls):
+    """Apply a function on multiple collections
+
+    >>> print multimap(operator.add, ((1, 2, 3), (4, 5, 6)))
+    [5, 7, 9]
+
+    >>> f = lambda x, y, z: 2*x + 3*y - z
+    >>> result = multimap(f, ((1, 2), (4, 1), (1, 1)))
+    >>> result[0] == f(1, 4, 1)
+    True
+    >>> result[1] == f(2, 1, 1)
+    True
+
+    """
+    return list(itertools.starmap(fn, zip(*colls)))
+
+
+def pipe(data, *fns):
+    """Apply functions recursively on your data
+
+    >>> inc = lambda x: x + 1
+    >>> pipe(42, inc, str) 
+    '43'
+    """
+    return reduce(lambda acc, f: f(acc), fns, data)
+
+
+def pipe_each(coll, *fns):
+    """Apply functions recursively on your collection of data
+
+    """
+    return map(lambda x: pipe(x, *fns), coll)
+
+
+def shift(func, *args, **kwargs):
+    """This function is basically a beefed up lambda x: func(x, *args, **kwargs)
+    
+    `shift` comes in handy when it is used in a pipeline with a function that
+    needs the passed value as its first argument.
+
+    >>> def div(x, y): return float(x) / y
+
+    # This is equivalent to div(42, 2):
+    >>> shift(div, 2)(42)
+    21.0
+
+    # which is different from div(2, 42):
+    >>> partial(div, 2)(42)
+    0.047619047619047616
+
+    """
+    @wraps(func)
+    def wrapped(x):
+        return func(x, *args, **kwargs)
+    return wrapped
+
+
 # FILTERING  {{{1
 
 def duplicates(coll):
@@ -262,67 +332,16 @@ def drop(n, seq):
     return list(itertools.islice(seq, n, None))
 
 
-# CREATION {{{1
+def find(fn, record):
+    """Apply a function on the record and return the corresponding new record
 
-def assoc(_d, key, value):
-    """Associate a key with a value in a dictionary
-
-    >>> movie = assoc({}, 'name', 'Holy Grail')
-    >>> print movie
-    {'name': 'Holy Grail'}
+    >>> print find(max, {'Terry': 30, 'Graham': 35, 'John': 27})
+    {'Graham': 35}
 
     """
-    d = deepcopy(_d)
-    d[key] = value
-    return d
-
-
-def dispatch(data, fns):
-    """Apply the functions on the data
-
-    :param data: the data
-    :param fns: a list of functions
-
-    >>> x = (1, 42, 5, 79)
-    >>> print dispatch(x, (min, max))
-    [1, 79]
-
-    """
-    return map(lambda fn: fn(data), fns)
-
-
-def multimap(fn, colls):
-    """Apply a function on multiple collections
-
-    >>> print multimap(operator.add, ((1, 2, 3), (4, 5, 6)))
-    [5, 7, 9]
-
-    >>> f = lambda x, y, z: 2*x + 3*y - z
-    >>> result = multimap(f, ((1, 2), (4, 1), (1, 1)))
-    >>> result[0] == f(1, 4, 1)
-    True
-    >>> result[1] == f(2, 1, 1)
-    True
-
-    """
-    return list(itertools.starmap(fn, zip(*colls)))
-
-
-def pipe(data, *fns):
-    """Apply functions recursively on your data
-
-    >>> inc = lambda x: x + 1
-    >>> pipe(42, inc, str) 
-    '43'
-    """
-    return reduce(lambda acc, f: f(acc), fns, data)
-
-
-def pipe_each(coll, *fns):
-    """Apply functions recursively on your collection of data
-
-    """
-    return map(lambda x: pipe(x, *fns), coll)
+    values_result = fn(record.values())
+    keys_result = [k for k, v in record.items() if v == values_result]
+    return {keys_result[0]: values_result}
 
 
 # INSPECTION {{{1
@@ -408,18 +427,6 @@ def attributes(data):
     return [x for x in dir(data) if not callable(x) and not x.startswith('__')]
 
 
-def find(fn, record):
-    """'Apply a function on the record and return the corresponding new record
-
-    >>> print find(max, {'Terry': 30, 'Graham': 35, 'John': 27})
-    {'Graham': 35}
-
-    """
-    values_result = fn(record.values())
-    keys_result = [k for k, v in record.items() if v == values_result]
-    return {keys_result[0]: values_result}
-
-
 def find_each(fn, records):
     return dmap(lambda c: find(fn, x), records)
 
@@ -502,28 +509,5 @@ def isdistinct(coll):
     """
     most_common = collections.Counter(coll).most_common(1)
     return not most_common[0][1] > 1
-
-
-def shift(func, *args, **kwargs):
-    """This function is basically a beefed up lambda x: func(x, *args, **kwargs)
-    
-    `shift` comes in handy when it is used in a pipeline with a function that
-    needs the passed value as its first argument.
-
-    >>> def div(x, y): return float(x) / y
-
-    # This is equivalent to div(42, 2):
-    >>> shift(div, 2)(42)
-    21.0
-
-    # which is different from div(2, 42):
-    >>> partial(div, 2)(42)
-    0.047619047619047616
-
-    """
-    @wraps(func)
-    def wrapped(x):
-        return func(x, *args, **kwargs)
-    return wrapped
 
 
