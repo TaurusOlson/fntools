@@ -14,6 +14,7 @@ module is a set of functions that I needed in my work and found useful.
 Installation
 ------------
 
+::
     pip install fntools
 
 
