@@ -1,4 +1,5 @@
 from setuptools import setup
+import fntools
 
 
 def readme():
@@ -7,7 +8,7 @@ def readme():
 
 
 setup(name='fntools',
-      version='1.0.4',
+      version=fntools.__version__,
       description='Functional programming tools for data processing',
       long_description=readme(),
       classifiers=[
@@ -19,7 +20,7 @@ setup(name='fntools',
       url='https://github.com/TaurusOlson/fntools',
       packages=['fntools'],
       keywords='functional programming tools data processing',
-      license='MIT',
+      license=fntools.__license__,
       include_package_data=True,
       zip_safe=False
       )
