@@ -1,3 +1,7 @@
 *.pyc
 *.egg-info
 experimental.py
+fntools.egg-info
+tags
+build
+dist
