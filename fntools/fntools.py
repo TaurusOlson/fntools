@@ -15,6 +15,20 @@ from functools import wraps
 
 # TRANSFORMATION {{{1
 
+# def iterate(fn, *args):
+#     """Repeat iteratively a function 
+    
+#     >>> inc = lambda x: x + 1
+#     >>> result = iterate(inc, 10)
+#     >>> result.next()
+#     11
+#     >>> result.next()
+#     12
+
+#     """
+#     return reduce(lambda x, f: fn(*args), )
+
+
 def use_with(data, fn, *attrs):
     """
     # Let's create some data first
@@ -60,7 +74,7 @@ def concat(colls):
     [1, 2, 3, 4]
 
     """
-    return list(itertools.chain.from_iterable(colls))
+    return list(itertools.chain(*colls))
 
 
 def mapcat(fn, colls):
@@ -406,6 +420,10 @@ def find(fn, record):
     return {keys_result[0]: values_result}
 
 
+def find_each(fn, records):
+    return dmap(lambda c: find(fn, x), records)
+
+
 def dfilter(fn, record):
     """filter for a directory
 
@@ -472,6 +490,8 @@ def count(fn, coll):
     return len([x for x in coll if fn(x) is True])
 
 
+# TODO Check collections.Counter can be imported
+# (it is available obly in recent versions of Python)
 def isdistinct(coll):
     """
     >>> isdistinct([1, 2, 3])
