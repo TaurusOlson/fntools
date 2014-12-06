@@ -11,4 +11,3 @@ setup(name='fntools',
       packages=['fntools'],
       zip_safe=False
       )
-
