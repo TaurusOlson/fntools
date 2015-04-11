@@ -428,7 +428,7 @@ def attributes(data):
 
 
 def find_each(fn, records):
-    return dmap(lambda c: find(fn, x), records)
+    return dmap(lambda x: find(fn, x), records)
 
 
 def dfilter(fn, record):
