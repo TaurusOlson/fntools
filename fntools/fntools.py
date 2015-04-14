@@ -195,7 +195,7 @@ def pipe(data, *fns):
     """Apply functions recursively on your data
 
     >>> inc = lambda x: x + 1
-    >>> pipe(42, inc, str) 
+    >>> pipe(42, inc, str)
     '43'
     """
     return reduce(lambda acc, f: f(acc), fns, data)
@@ -532,7 +532,7 @@ def count(fn, coll):
 
 
 # TODO Check collections.Counter can be imported
-# (it is available obly in recent versions of Python)
+# (it is available only in recent versions of Python)
 def isdistinct(coll):
     """
     >>> isdistinct([1, 2, 3])
