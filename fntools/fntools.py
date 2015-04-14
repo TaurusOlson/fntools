@@ -446,18 +446,52 @@ def dfilter(fn, record):
     return dict([(k, v) for k, v in record.items() if fn(v)])
 
 
-def occurrences(coll, value=None):
+# TODO Refactor to avoid duplication
+def _filter_occurrences(count, relat_op):
+    """Filter the occurrences with respect to the selected relational operators"""
+    # Filter the occurrences equal (or not equal) to a given value
+    if "eq" in relat_op:
+        count = dfilter(lambda x: x == relat_op["eq"], count)
+    elif "ne" in relat_op:
+        count = dfilter(lambda x: x != relat_op["ne"], count)
+
+    # Filter the occurrences lower (or equal) than a given value
+    if "lt" in relat_op:
+        count = dfilter(lambda x: x < relat_op["lt"], count)
+    elif "le" in relat_op:
+        count = dfilter(lambda x: x <= relat_op["le"], count)
+
+    # Filter the occurrences greater (or equal) than a given value
+    if "gt" in relat_op:
+        count = dfilter(lambda x: x > relat_op["gt"], count)
+    elif "ge" in relat_op:
+        count = dfilter(lambda x: x >= relat_op["ge"], count)
+    return count 
+
+
+def occurrences(coll, value=None, **options):
     """Return the occurrences of the elements in the collection
 
     >>> print occurrences((1, 1, 2, 3))
     {1: 2, 2: 1, 3: 1}
     >>> print occurrences((1, 1, 2, 3), 1)
     2
+    # Filter the values of the occurrences that
+    # are <, <=, >, >=, == or != than a given number
+    >>> print occurrences((1, 1, 2, 3), lt=3)
+    {1: 2, 2: 1, 3: 1}
+    >>> print occurrences((1, 1, 2, 3), gt=1)
+    {1: 2}
+    >>> print occurrences((1, 1, 2, 3), ne=1)
+    {1: 2}
 
     """
     count = {}
     for element in coll:
         count[element] = count.get(element, 0) + 1
+
+    if options:
+        count = _filter_occurrences(count, options)
 
     if value:
         count = count.get(value, 0)
