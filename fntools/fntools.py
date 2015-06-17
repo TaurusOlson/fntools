@@ -210,7 +210,7 @@ def pipe_each(coll, *fns):
 
 def shift(func, *args, **kwargs):
     """This function is basically a beefed up lambda x: func(x, *args, **kwargs)
-    
+
     `shift` comes in handy when it is used in a pipeline with a function that
     needs the passed value as its first argument.
 
@@ -221,6 +221,7 @@ def shift(func, *args, **kwargs):
     21.0
 
     # which is different from div(2, 42):
+    >>> from functools import partial
     >>> partial(div, 2)(42)
     0.047619047619047616
 
@@ -476,6 +477,7 @@ def occurrences(coll, value=None, **options):
     {1: 2, 2: 1, 3: 1}
     >>> print occurrences((1, 1, 2, 3), 1)
     2
+
     # Filter the values of the occurrences that
     # are <, <=, >, >=, == or != than a given number
     >>> print occurrences((1, 1, 2, 3), lt=3)
@@ -543,5 +545,3 @@ def isdistinct(coll):
     """
     most_common = collections.Counter(coll).most_common(1)
     return not most_common[0][1] > 1
-
-
