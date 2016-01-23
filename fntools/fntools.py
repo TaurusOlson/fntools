@@ -85,6 +85,48 @@ def dmap(fn, record):
     return dict(itertools.izip(record, values))
 
 
+def rmap(fn, coll, isiterable=isiterable):
+    """
+    A recursive map
+
+    :param fn: a function
+    :param coll: a list
+    :param isiterable: a predicate function determining whether a value is
+    iterable. 
+    :returns: a list
+
+    >>> y = rmap(lambda x: 2*x, [1, 2, [3, 4]])
+    [2, 4, [6, 8]]
+
+    """
+    result = []
+    for x in coll:
+        if isiterable(x):
+            y = rmap(fn, x)
+        else:
+            y = fn(x)
+        result.append(y)
+    return result
+
+
+def replace(x, old, new, fn=operator.eq):
+    """
+    Replace x with new if fn(x, old) is True.
+
+    :param x: Any value
+    :param old: The old value we want to replace
+    :param new: The value replacing old
+    :param fn: The predicate function determining the relation between x and
+    old. By default fn is the equality function.
+    :returns: x or new
+
+    >>> map(lambda x: replace(x, None, -1), [None, 1, 2, None])
+    [-1, 1, 2, -1]
+
+    """
+    return new if fn(x, old) else x
+
+
 def compose(*fns):
     """Return the function composed with the given functions
 
