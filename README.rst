@@ -1,9 +1,9 @@
-=======
 fntools
 =======
 
 
 .. image:: https://readthedocs.org/projects/fntools/badge/?version=master
+
 :target: https://readthedocs.org/projects/fntools/?badge=master
 :alt: Documentation Status
 

@@ -2,15 +2,10 @@ from setuptools import setup
 import fntools
 
 
-def readme():
-    with open('README.rst') as f:
-        return f.read()
-
-
 setup(name='fntools',
       version=fntools.__version__,
       description='Functional programming tools for data processing',
-      long_description=readme(),
+      long_description=open('README.rst').read(),
       classifiers=[
         'Programming Language :: Python :: 2.7',
         'Topic :: Utilities',
