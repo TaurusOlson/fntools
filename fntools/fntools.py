@@ -233,6 +233,23 @@ def multimap(fn, colls):
     return list(itertools.starmap(fn, zip(*colls)))
 
 
+def multistarmap(fn, *colls):
+    """Apply a function on multiple collections
+
+    >>> print multistarmap(operator.add, (1, 2, 3), (4, 5, 6))
+    [5, 7, 9]
+
+    >>> f = lambda x, y, z: 2*x + 3*y - z
+    >>> result = multistarmap(f, (1, 2), (4, 1), (1, 1))
+    >>> result[0] == f(1, 4, 1)
+    True
+    >>> result[1] == f(2, 1, 1)
+    True
+
+    """
+    return list(itertools.starmap(fn, zip(*colls)))
+
+
 def pipe(data, *fns):
     """Apply functions recursively on your data
 
@@ -272,6 +289,18 @@ def shift(func, *args, **kwargs):
     def wrapped(x):
         return func(x, *args, **kwargs)
     return wrapped
+
+
+def repeatedly(func):
+    """Repeat a function taking no argument
+    
+    
+    >>> from random import random
+    >>> take(10, repeatedly(random))
+
+    """
+    while True:
+        yield func()
 
 
 # FILTERING  {{{1
