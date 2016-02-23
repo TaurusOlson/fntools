@@ -12,7 +12,7 @@ from .fntools import use_with, zip_with, unzip, concat, mapcat, dmap, rmap, repl
         indexof, indexesof, count, isdistinct
 
 
-__version__ = '1.0.4'
+__version__ = '1.1.0'
 __title__ = 'fntools'
 __author__ = 'Taurus Olson'
 __license__ = 'MIT'
