@@ -112,6 +112,7 @@ def rmap(fn, coll, isiterable=None):
     return result
 
 
+# TODO new can be a value or a function applied to x
 def replace(x, old, new, fn=operator.eq):
     """
     Replace x with new if fn(x, old) is True.
