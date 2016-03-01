@@ -85,14 +85,14 @@ def dmap(fn, record):
     return dict(itertools.izip(record, values))
 
 
-def rmap(fn, coll, isiterable=isiterable):
+def rmap(fn, coll, isiterable=None):
     """
     A recursive map
 
     :param fn: a function
     :param coll: a list
     :param isiterable: a predicate function determining whether a value is
-    iterable. 
+    iterable.
     :returns: a list
 
     >>> y = rmap(lambda x: 2*x, [1, 2, [3, 4]])
@@ -101,6 +101,9 @@ def rmap(fn, coll, isiterable=isiterable):
     """
     result = []
     for x in coll:
+        if isiterable is None:
+            isiterable = isiterable
+
         if isiterable(x):
             y = rmap(fn, x)
         else:
