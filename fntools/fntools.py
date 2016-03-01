@@ -306,6 +306,38 @@ def repeatedly(func):
         yield func()
 
 
+def update(records, column, values):
+    """Update the column of records
+
+    :param records: a list of dictionaries
+    :param column: a string
+    :param values: an iterable or a function
+    :returns: new_records
+
+    >>> movies = [
+    {'title': 'The Holy Grail', 'year': 1975, 'budget': 4E5, 'total_gross': 5E6},
+    {'title': 'Life of Brian', 'year': 1979, 'budget': 4E6, 'total_gross': 20E6},
+    {'title': 'The Meaning of Life', 'year': 1983, 'budget': 9E6, 'total_gross': 14.9E6}
+    ]
+    >>> update(movies, 'budget', lambda x: 2*x)
+    (8E5, 8E6, 18E6)
+    >>> update(movies, 'budget', (40, 400, 900))
+    (40, 400, 900)
+    """
+    new_records = deepcopy(records)
+
+    if values.__class__.__name__ == 'function':
+        for row in new_records:
+            row[column] = values(row[column])
+    elif isiterable(values):
+        for i, row in enumerate(new_records):
+            row[column] = values[i]
+    else:
+        msg = "You must provide a function or an iterable."
+        raise ValueError(msg)
+    return new_records
+
+
 # FILTERING  {{{1
 
 def duplicates(coll):
@@ -438,6 +470,12 @@ def select(records, columns):
 
     """
     return [pluck(records[i], *columns) for i, _ in enumerate(records)]
+
+
+def remove(coll, value):
+    """Remove all the occurrences of a given value"""
+    coll_class = coll.__class__
+    return coll_class(x for x in coll if x != value)
 
 
 # INSPECTION {{{1
