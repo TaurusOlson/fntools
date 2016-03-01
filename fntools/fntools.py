@@ -678,3 +678,18 @@ def isdistinct(coll):
     """
     most_common = collections.Counter(coll).most_common(1)
     return not most_common[0][1] > 1
+
+
+def nrow(records):
+    """Return the number of rows in the records"""
+    return len(records)
+
+
+def ncol(records):
+    """Return the number of columns in the records"""
+    return len(records[0])
+
+
+def names(records):
+    """Return the column names of the records"""
+    return records[0].keys()
