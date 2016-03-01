@@ -5,3 +5,4 @@ fntools.egg-info
 tags
 build
 dist
+.projections.json
