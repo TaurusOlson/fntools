@@ -296,8 +296,8 @@ def shift(func, *args, **kwargs):
 
 def repeatedly(func):
     """Repeat a function taking no argument
-    
-    
+
+
     >>> from random import random
     >>> take(10, repeatedly(random))
 
@@ -600,7 +600,7 @@ def _filter_occurrences(count, relat_op):
         count = dfilter(lambda x: x > relat_op["gt"], count)
     elif "ge" in relat_op:
         count = dfilter(lambda x: x >= relat_op["ge"], count)
-    return count 
+    return count
 
 
 def occurrences(coll, value=None, **options):
