@@ -391,19 +391,33 @@ def pluck_each(records, columns):
     return [pluck(records[i], *columns) for i, _ in enumerate(records)]
 
 
-def use(data, *attrs):
-    """
-    # Let's create some data first
+def use(data, attrs):
+    """Return the values of the attributes for the given data
+
+    :param data: the data
+    :param attrs: strings
+    :returns: a list
+    
+    # With a dict
+    >>> band = {'name': 'Metallica', 'singer': 'James Hetfield', 'guitarist': 'Kirk Hammet'}
+    >>> use(band, ('name', 'date', 'singer'))
+    ['Metallica', None, 'James Hetfield']
+
+    # With a non dict data structure
     >>> from collections import namedtuple
     >>> Person = namedtuple('Person', ('name', 'age', 'gender'))
     >>> alice = Person('Alice', 30, 'F')
-
-    # Usage
-    >>> use(alice, 'name', 'gender')
+    >>> use(alice, ('name', 'gender'))
     ['Alice', 'F']
 
     """
-    return map(lambda x: getattr(data, x), attrs)
+    if isinstance(data, dict):
+        if not isiterable(attrs):
+            attrs = [attrs]
+        coll = map(data.get, attrs)
+    else:
+        coll = map(lambda x: getattr(data, x), attrs)
+    return coll
 
 
 def get_in(record, *keys, **kwargs):
@@ -419,19 +433,6 @@ def get_in(record, *keys, **kwargs):
     """
     default = kwargs.get('default', None)
     return reduce(lambda a, x: a.get(x, default), keys, record)
-
-
-def valuesof(record, keys):
-    """Return the values corresponding to the given keys
-
-    >>> band = {'name': 'Metallica', 'singer': 'James Hetfield', 'guitarist': 'Kirk Hammet'}
-    >>> print valuesof(band, ('name', 'date', 'singer'))
-    ['Metallica', None, 'James Hetfield']
-
-    """
-    if not isiterable(keys):
-        keys = [keys]
-    return map(record.get, keys)
 
 
 def valueof(records, key):
