@@ -368,6 +368,25 @@ def pluck(record, *keys, **kwargs):
     return reduce(lambda a, x: assoc(a, x, record.get(x, default)), keys, {})
 
 
+def pluck_each(records, columns):
+    """Return the records with the selected columns
+
+    :param records: a list of dictionaries
+    :param columns: a list or a tuple
+    :returns: a list of dictionaries with the selected columns
+
+    >>> movies = [
+    ... {'title': 'The Holy Grail', 'year': 1975, 'budget': 4E5, 'total_gross': 5E6},
+    ... {'title': 'Life of Brian', 'year': 1979, 'budget': 4E6, 'total_gross': 20E6},
+    ... {'title': 'The Meaning of Life', 'year': 1983, 'budget': 9E6, 'total_gross': 14.9E6}
+    ... ]
+    >>> pluck_each(movies, ('title', 'year'))
+    [{'year': 1975, 'title': 'The Holy Grail'}, {'year': 1979, 'title': 'Life of Brian'}, {'year': 1983, 'title': 'The Meaning of Life'}]
+
+    """
+    return [pluck(records[i], *columns) for i, _ in enumerate(records)]
+
+
 def use(data, *attrs):
     """
     # Let's create some data first
@@ -455,27 +474,6 @@ def find(fn, record):
     values_result = fn(record.values())
     keys_result = [k for k, v in record.items() if v == values_result]
     return {keys_result[0]: values_result}
-
-
-def select(records, columns):
-    """Return the records with the selected columns
-
-    :param records: a list of dictionaries
-    :param columns: a list or a tuple
-    :returns: a list of dictionaries with the selected columns
-
-    >>> movies = [
-    {'title': 'The Holy Grail', 'year': 1975, 'budget': 4E5, 'total_gross': 5E6},
-    {'title': 'Life of Brian', 'year': 1979, 'budget': 4E6, 'total_gross': 20E6},
-    {'title': 'The Meaning of Life', 'year': 1983, 'budget': 9E6, 'total_gross': 14.9E6}
-    ]
-    >>> select(movies, ('title', 'year'))
-    [{'title': 'The Holy Grail', 'year': 1975},
-     {'title': 'Life of Brian', 'year': 1979},
-     {'title': 'The Meaning of Life', 'year': 1983}]
-
-    """
-    return [pluck(records[i], *columns) for i, _ in enumerate(records)]
 
 
 def remove(coll, value):
