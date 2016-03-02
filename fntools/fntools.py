@@ -655,8 +655,18 @@ def indexof(coll, item, start=0, default=None):
 
     :returns: idx -- The index of the item in the collection
 
+    >>> monties = ['Eric', 'John', 'Terry', 'Terry', 'Graham', 'Mickael']
+    >>> indexof(monties, 'Terry')
+    2
+
+    >>> indexof(monties, 'Terry', start=3)
+    3
+
+    >>> indexof(monties, 'Terry', start=4) is None
+    True
+
     """
-    if item in coll:
+    if item in coll[start:]:
         return list(coll).index(item, start)
     else:
         return default
