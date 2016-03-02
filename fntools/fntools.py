@@ -154,16 +154,20 @@ def compose(*fns):
     return reduce(compose2, fns)
 
 
-def groupby(f, sample):
-    """Group elements in sub-samples by f
+def groupby(fn, coll):
+    """Group elements in sub-collections by fn
 
-    >>> print groupby(len, ['John', 'Terry', 'Eric', 'Graham', 'Mickael'])
+    :param fn: a function
+    :param coll: a collection
+    :returns: a dictionary
+
+    >>> groupby(len, ['John', 'Terry', 'Eric', 'Graham', 'Mickael'])
     {4: ['John', 'Eric'], 5: ['Terry'], 6: ['Graham'], 7: ['Mickael']}
 
     """
     d = collections.defaultdict(list)
-    for item in sample:
-        key = f(item)
+    for item in coll:
+        key = fn(item)
         d[key].append(item)
     return dict(d)
 
