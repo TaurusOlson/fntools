@@ -563,7 +563,15 @@ def attributes(data):
 
 
 def find_each(fn, records):
-    return dmap(lambda x: find(fn, x), records)
+    """Apply a function on the records and return the corresponding new record
+
+    >>> find_each(max, [{'math': 13, 'biology': 17, 'chemistry': 18},
+    ... {'math': 15, 'biology': 12, 'chemistry': 13},
+    ... {'math': 16, 'biology': 17, 'chemistry': 11}])
+    [{'chemistry': 18}, {'math': 15}, {'biology': 17}]
+
+    """
+    return [find(fn, record) for record in records]
 
 
 def dfilter(fn, record):
