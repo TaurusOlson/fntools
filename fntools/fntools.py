@@ -3,11 +3,11 @@
 `fntools` is a simple library providing the user with functional programming
 functions to transform, filter and inspect Python data structures.
 It introduces no new class or data structures but instead emphasizes the use
-of::
+of:
 
-    * pure
-    * composable
-    * lightweight
+* pure
+* composable
+* lightweight
 
 functions to solve common problems while processing your data.
 
@@ -129,8 +129,7 @@ def rmap(fn, coll, is_iterable=None):
 
     :param fn: a function
     :param coll: a list
-    :param isiterable: a predicate function determining whether a value is
-    iterable.
+    :param isiterable: a predicate function determining whether a value is iterable.
     :returns: a list
 
     >>> rmap(lambda x: 2*x, [1, 2, [3, 4]])
@@ -158,8 +157,9 @@ def replace(x, old, new, fn=operator.eq):
     :param x: Any value
     :param old: The old value we want to replace
     :param new: The value replacing old
-    :param fn: The predicate function determining the relation between x and
-    old. By default fn is the equality function.
+    :param fn: 
+        The predicate function determining the relation between x and
+        old. By default fn is the equality function.
     :returns: x or new
 
     >>> map(lambda x: replace(x, None, -1), [None, 1, 2, None])
@@ -793,8 +793,9 @@ def occurrences(coll, value=None, **options):
 
     :param coll: a collection
     :param value: a value in the collection
-    :param options: an optional keyword used as a criterion to filter the
-    values in the collection
+    :param options: 
+        an optional keyword used as a criterion to filter the
+        values in the collection
     :returns: the frequency of the values in the collection as a dictionary
 
     >>> occurrences((1, 1, 2, 3))
