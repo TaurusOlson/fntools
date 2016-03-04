@@ -6,3 +6,4 @@ tags
 build
 dist
 .projections.json
+docs/_build
