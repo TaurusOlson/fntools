@@ -33,15 +33,15 @@ def use_with(data, fn, *attrs):
 
     Let's create some data first::
 
-    >>> from collections import namedtuple
-    >>> Person = namedtuple('Person', ('name', 'age', 'gender'))
-    >>> alice = Person('Alice', 30, 'F')
+        >>> from collections import namedtuple
+        >>> Person = namedtuple('Person', ('name', 'age', 'gender'))
+        >>> alice = Person('Alice', 30, 'F')
 
     Usage::
 
-    >>> make_csv_row = lambda n, a, g: '%s,%d,%s' % (n, a, g)
-    >>> use_with(alice, make_csv_row, 'name', 'age', 'gender')
-    'Alice,30,F'
+        >>> make_csv_row = lambda n, a, g: '%s,%d,%s' % (n, a, g)
+        >>> use_with(alice, make_csv_row, 'name', 'age', 'gender')
+        'Alice,30,F'
 
     """
     args = [getattr(data, x) for x in attrs]
@@ -373,14 +373,14 @@ def shift(func, *args, **kwargs):
 
     This is equivalent to div(42, 2)::
 
-    >>> shift(div, 2)(42)
-    21.0
+        >>> shift(div, 2)(42)
+        21.0
 
     which is different from div(2, 42)::
 
-    >>> from functools import partial
-    >>> partial(div, 2)(42)
-    0.047619047619047616
+        >>> from functools import partial
+        >>> partial(div, 2)(42)
+        0.047619047619047616
 
     """
     @wraps(func)
@@ -470,9 +470,9 @@ def pluck(record, *keys, **kwargs):
 
     The keyword 'default' allows to replace a `None` value::
 
-    >>> d = {'year': 2014, 'movie': 'Bilbo'}
-    >>> pluck(d, 'year', 'movie', 'nb_aliens', default=0)
-    {'movie': 'Bilbo', 'nb_aliens': 0, 'year': 2014}
+        >>> d = {'year': 2014, 'movie': 'Bilbo'}
+        >>> pluck(d, 'year', 'movie', 'nb_aliens', default=0)
+        {'movie': 'Bilbo', 'nb_aliens': 0, 'year': 2014}
 
     """
     default = kwargs.get('default', None)
@@ -507,17 +507,17 @@ def use(data, attrs):
 
     With a dict::
 
-    >>> band = {'name': 'Metallica', 'singer': 'James Hetfield', 'guitarist': 'Kirk Hammet'}
-    >>> use(band, ('name', 'date', 'singer'))
-    ['Metallica', None, 'James Hetfield']
+        >>> band = {'name': 'Metallica', 'singer': 'James Hetfield', 'guitarist': 'Kirk Hammet'}
+        >>> use(band, ('name', 'date', 'singer'))
+        ['Metallica', None, 'James Hetfield']
 
     With a non dict data structure::
 
-    >>> from collections import namedtuple
-    >>> Person = namedtuple('Person', ('name', 'age', 'gender'))
-    >>> alice = Person('Alice', 30, 'F')
-    >>> use(alice, ('name', 'gender'))
-    ['Alice', 'F']
+        >>> from collections import namedtuple
+        >>> Person = namedtuple('Person', ('name', 'age', 'gender'))
+        >>> alice = Person('Alice', 30, 'F')
+        >>> use(alice, ('name', 'gender'))
+        ['Alice', 'F']
 
     """
     if isinstance(data, dict):
@@ -813,12 +813,12 @@ def occurrences(coll, value=None, **options):
     Filter the values of the occurrences that are 
     <, <=, >, >=, == or != than a given number::
 
-    >>> occurrences((1, 1, 2, 3), lt=3)
-    {1: 2, 2: 1, 3: 1}
-    >>> occurrences((1, 1, 2, 3), gt=1)
-    {1: 2}
-    >>> occurrences((1, 1, 2, 3), ne=1)
-    {1: 2}
+        >>> occurrences((1, 1, 2, 3), lt=3)
+        {1: 2, 2: 1, 3: 1}
+        >>> occurrences((1, 1, 2, 3), gt=1)
+        {1: 2}
+        >>> occurrences((1, 1, 2, 3), ne=1)
+        {1: 2}
 
     """
     count = {}
