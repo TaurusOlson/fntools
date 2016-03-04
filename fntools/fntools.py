@@ -2,6 +2,14 @@
 
 `fntools` is a simple library providing the user with functional programming
 functions to transform, filter and inspect Python data structures.
+It introduces no new class or data structures but instead emphasizes the use
+of::
+
+    * pure
+    * composable
+    * lightweight
+
+functions to solve common problems while processing your data.
 
 """
 
