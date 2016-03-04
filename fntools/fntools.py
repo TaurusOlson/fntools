@@ -16,7 +16,13 @@ from functools import wraps
 # TRANSFORMATION {{{1
 
 def use_with(data, fn, *attrs):
-    """
+    """Apply a function on the attributes of the data
+
+    :param data: an object
+    :param fn: a function
+    :param attrs: some attributes of the object
+    :returns: an object
+
     # Let's create some data first
     >>> from collections import namedtuple
     >>> Person = namedtuple('Person', ('name', 'age', 'gender'))
@@ -37,8 +43,9 @@ def zip_with(fn, *colls):
 
     :param fn: a function
     :param colls: collections
+    :returns: an iterator
 
-    >>> print list(zip_with(lambda x, y: x-y, [10, 20, 30], [42, 19, 43]))
+    >>> list(zip_with(lambda x, y: x-y, [10, 20, 30], [42, 19, 43]))
     [-32, 1, -13]
 
     """
@@ -46,7 +53,15 @@ def zip_with(fn, *colls):
 
 
 def unzip(colls):
-    """Unzip collections"""
+    """Unzip collections
+
+    :param colls: collections 
+    :returns: unzipped collections
+
+    >>> unzip([[1, 2, 3], [10, 20, 30], [100, 200, 300]])
+    [(1, 10, 100), (2, 20, 200), (3, 30, 300)]
+
+    """
     return zip(*colls)
 
 
@@ -56,7 +71,7 @@ def concat(colls):
     :param colls: a list of collections
     :returns: the concatenation of the collections
 
-    >>> print concat(([1, 2], [3, 4]))
+    >>> concat(([1, 2], [3, 4]))
     [1, 2, 3, 4]
 
     """
@@ -74,7 +89,7 @@ def mapcat(fn, colls):
     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
     """
-    return map(fn, concat(colls))
+    return concat(map(fn, colls))
 
 
 # TODO Fix and test dmap
@@ -85,14 +100,25 @@ def dmap(fn, record):
     :param record: a dictionary
     :returns: a dictionary
 
+    >>> grades = [{'math': 13, 'biology': 17, 'chemistry': 18},
+    ... {'math': 15, 'biology': 12, 'chemistry': 13},
+    ... {'math': 16, 'biology': 17, 'chemistry': 11}]
+
+    >>> def is_greater_than(x):
+    ...     def func(y):
+    ...         return y > x
+    ...     return func
+
+    >>> dmap(is_greater_than(15), grades[0])
+    {'biology': True, 'chemistry': True, 'math': False}
+
     """
     values = (fn(v) for k, v in record.items())
     return dict(itertools.izip(record, values))
 
 
-def rmap(fn, coll, isiterable=None):
-    """
-    A recursive map
+def rmap(fn, coll, is_iterable=None):
+    """A recursive map
 
     :param fn: a function
     :param coll: a list
@@ -100,16 +126,16 @@ def rmap(fn, coll, isiterable=None):
     iterable.
     :returns: a list
 
-    >>> y = rmap(lambda x: 2*x, [1, 2, [3, 4]])
+    >>> rmap(lambda x: 2*x, [1, 2, [3, 4]])
     [2, 4, [6, 8]]
 
     """
     result = []
     for x in coll:
-        if isiterable is None:
-            isiterable = isiterable
+        if is_iterable is None:
+            is_iterable = isiterable
 
-        if isiterable(x):
+        if is_iterable(x):
             y = rmap(fn, x)
         else:
             y = fn(x)
@@ -139,10 +165,13 @@ def replace(x, old, new, fn=operator.eq):
 def compose(*fns):
     """Return the function composed with the given functions
 
+    :param fns: functions
+    :returns: a function
+
     >>> add2 = lambda x: x+2
     >>> mult3 = lambda x: x*3
     >>> new_fn = compose(add2, mult3)
-    >>> print new_fn(2)
+    >>> new_fn(2)
     8
 
     .. note:: compose(fn1, fn2, fn3) is the same as fn1(fn2(fn3))
@@ -175,10 +204,15 @@ def groupby(fn, coll):
 def reductions(fn, seq, acc=None):
     """Return the intermediate values of a reduction
 
-    >>> print reductions(lambda x, y: x + y, [1, 2, 3])
+    :param fn: a function
+    :param seq: a sequence
+    :param acc: the accumulator
+    :returns: a list
+
+    >>> reductions(lambda x, y: x + y, [1, 2, 3])
     [1, 3, 6]
 
-    >>> print reductions(lambda x, y: x + y, [1, 2, 3], 10)
+    >>> reductions(lambda x, y: x + y, [1, 2, 3], 10)
     [11, 13, 16]
 
     """
@@ -192,9 +226,13 @@ def reductions(fn, seq, acc=None):
 def split(coll, factor):
     """Split a collection by using a factor
 
+    :param coll: a collection
+    :param factor: a collection of factors
+    :returns: a dictionary
+
     >>> bands = ('Led Zeppelin', 'Debussy', 'Metallica', 'Iron Maiden', 'Bach')
     >>> styles = ('rock', 'classic', 'rock', 'rock', 'classic')
-    >>> print split(bands, styles)
+    >>> split(bands, styles)
     {'classic': ['Debussy', 'Bach'], 'rock': ['Led Zeppelin', 'Metallica', 'Iron Maiden']}
 
     """
@@ -205,9 +243,19 @@ def split(coll, factor):
 def assoc(_d, key, value):
     """Associate a key with a value in a dictionary
 
-    >>> movie = assoc({}, 'name', 'Holy Grail')
-    >>> print movie
+    :param _d: a dictionary
+    :param key: a key in the dictionary
+    :param value: a value for the key
+    :returns: a new dictionary
+
+    >>> data = {}
+    >>> new_data = assoc(data, 'name', 'Holy Grail')
+    >>> new_data
     {'name': 'Holy Grail'}
+    >>> data
+    {}
+
+    .. note:: the original dictionary is not modified
 
     """
     d = deepcopy(_d)
@@ -220,9 +268,10 @@ def dispatch(data, fns):
 
     :param data: the data
     :param fns: a list of functions
+    :returns: a collection
 
     >>> x = (1, 42, 5, 79)
-    >>> print dispatch(x, (min, max))
+    >>> dispatch(x, (min, max))
     [1, 79]
 
     """
@@ -232,7 +281,11 @@ def dispatch(data, fns):
 def multimap(fn, colls):
     """Apply a function on multiple collections
 
-    >>> print multimap(operator.add, ((1, 2, 3), (4, 5, 6)))
+    :param fn: a function
+    :param colls: collections
+    :returns: a collection
+
+    >>> multimap(operator.add, ((1, 2, 3), (4, 5, 6)))
     [5, 7, 9]
 
     >>> f = lambda x, y, z: 2*x + 3*y - z
@@ -249,7 +302,11 @@ def multimap(fn, colls):
 def multistarmap(fn, *colls):
     """Apply a function on multiple collections
 
-    >>> print multistarmap(operator.add, (1, 2, 3), (4, 5, 6))
+    :param fn: a function
+    :param colls: collections
+    :returns: a collection
+
+    >>> multistarmap(operator.add, (1, 2, 3), (4, 5, 6))
     [5, 7, 9]
 
     >>> f = lambda x, y, z: 2*x + 3*y - z
@@ -266,15 +323,28 @@ def multistarmap(fn, *colls):
 def pipe(data, *fns):
     """Apply functions recursively on your data
 
+    :param data: the data
+    :param fns: functions
+    :returns: an object
+
     >>> inc = lambda x: x + 1
     >>> pipe(42, inc, str)
     '43'
+
     """
     return reduce(lambda acc, f: f(acc), fns, data)
 
 
 def pipe_each(coll, *fns):
     """Apply functions recursively on your collection of data
+
+    :param coll: a collection
+    :param fns: functions
+    :returns: a list
+
+    >>> inc = lambda x: x + 1
+    >>> pipe_each([0, 1, 1, 2, 3, 5], inc, str)
+    ['1', '2', '2', '3', '4', '6']
 
     """
     return map(lambda x: pipe(x, *fns), coll)
@@ -285,6 +355,10 @@ def shift(func, *args, **kwargs):
 
     `shift` comes in handy when it is used in a pipeline with a function that
     needs the passed value as its first argument.
+
+    :param func: a function
+    :param args: objects
+    :param kwargs: keywords
 
     >>> def div(x, y): return float(x) / y
 
@@ -307,9 +381,13 @@ def shift(func, *args, **kwargs):
 def repeatedly(func):
     """Repeat a function taking no argument
 
+    :param func: a function
+    :returns: a generator
 
-    >>> from random import random
-    >>> take(10, repeatedly(random))
+    >>> import random as rd
+    >>> rd.seed(123)
+    >>> take(3, repeatedly(rd.random))
+    [0.052363598850944326, 0.08718667752263232, 0.4072417636703983]
 
     """
     while True:
@@ -322,17 +400,21 @@ def update(records, column, values):
     :param records: a list of dictionaries
     :param column: a string
     :param values: an iterable or a function
-    :returns: new_records
+    :returns: new records with the columns updated
 
     >>> movies = [
-    {'title': 'The Holy Grail', 'year': 1975, 'budget': 4E5, 'total_gross': 5E6},
-    {'title': 'Life of Brian', 'year': 1979, 'budget': 4E6, 'total_gross': 20E6},
-    {'title': 'The Meaning of Life', 'year': 1983, 'budget': 9E6, 'total_gross': 14.9E6}
-    ]
-    >>> update(movies, 'budget', lambda x: 2*x)
-    (8E5, 8E6, 18E6)
-    >>> update(movies, 'budget', (40, 400, 900))
-    (40, 400, 900)
+    ... {'title': 'The Holy Grail', 'year': 1975, 'budget': 4E5, 'total_gross': 5E6},
+    ... {'title': 'Life of Brian', 'year': 1979, 'budget': 4E6, 'total_gross': 20E6},
+    ... {'title': 'The Meaning of Life', 'year': 1983, 'budget': 9E6, 'total_gross': 14.9E6}
+    ... ]
+    >>> new_movies = update(movies, 'budget', lambda x: 2*x)
+    >>> [new_movies[i]['budget'] for i,_ in enumerate(movies)]
+    [800000.0, 8000000.0, 18000000.0]
+
+    >>> new_movies2 = update(movies, 'budget', (40, 400, 900))
+    >>> [new_movies2[i]['budget'] for i,_ in enumerate(movies)]
+    [40, 400, 900]
+
     """
     new_records = deepcopy(records)
 
@@ -351,20 +433,32 @@ def update(records, column, values):
 # FILTERING  {{{1
 
 def duplicates(coll):
-    """Return the duplicated items in the given collection"""
+    """Return the duplicated items in the given collection
+
+    :param coll: a collection
+    :returns: a list of the duplicated items in the collection
+
+    >>> duplicates([1, 1, 2, 3, 3, 4, 1, 1])
+    [1, 3]
+
+    """
     return list(set(x for x in coll if coll.count(x) > 1))
 
 
 def pluck(record, *keys, **kwargs):
-    """
+    """Return the record with the selected keys
+
+    :param record: a list of dictionaries
+    :param keys: some keys from the record
+    :param kwargs: keywords determining how to deal with the keys
 
     >>> d = {'name': 'Lancelot', 'actor': 'John Cleese', 'color': 'blue'}
-    >>> print pluck(d, 'name', 'color')
+    >>> pluck(d, 'name', 'color')
     {'color': 'blue', 'name': 'Lancelot'}
 
     # the keyword 'default' allows to replace a None value
     >>> d = {'year': 2014, 'movie': 'Bilbo'}
-    >>> print pluck(d, 'year', 'movie', 'nb_aliens', default=0)
+    >>> pluck(d, 'year', 'movie', 'nb_aliens', default=0)
     {'movie': 'Bilbo', 'nb_aliens': 0, 'year': 2014}
 
     """
@@ -397,7 +491,7 @@ def use(data, attrs):
     :param data: the data
     :param attrs: strings
     :returns: a list
-    
+
     # With a dict
     >>> band = {'name': 'Metallica', 'singer': 'James Hetfield', 'guitarist': 'Kirk Hammet'}
     >>> use(band, ('name', 'date', 'singer'))
@@ -423,12 +517,17 @@ def use(data, attrs):
 def get_in(record, *keys, **kwargs):
     """Return the value corresponding to the keys in a nested record
 
-    >>> d = {'id': {'name': 'Lancelot', 'actor': 'John Cleese', 'color': 'blue'}}
-    >>> print get_in(d, 'id', 'name')
-    Lancelot
+    :param record: a dictionary
+    :param keys: strings
+    :param kwargs: keywords
+    :returns: the value for the keys
 
-    >>> print get_in(d, 'id', 'age', default='?')
-    ?
+    >>> d = {'id': {'name': 'Lancelot', 'actor': 'John Cleese', 'color': 'blue'}}
+    >>> get_in(d, 'id', 'name')
+    'Lancelot'
+
+    >>> get_in(d, 'id', 'age', default='?')
+    '?'
 
     """
     default = kwargs.get('default', None)
@@ -438,10 +537,10 @@ def get_in(record, *keys, **kwargs):
 def valueof(records, key):
     """Extract the value corresponding to the given key in all the dictionaries
 
-    # >>> bands = [{'name': 'Led Zeppelin', 'singer': 'Robert Plant', 'guitarist': 'Jimmy Page'},
-    # ....: {'name': 'Metallica', 'singer': 'James Hetfield', 'guitarist': 'Kirk Hammet'}]
-    # >>> print valueof(bands, 'singer')
-    # ['Robert Plant', 'James Hetfield']
+    >>> bands = [{'name': 'Led Zeppelin', 'singer': 'Robert Plant', 'guitarist': 'Jimmy Page'},
+    ... {'name': 'Metallica', 'singer': 'James Hetfield', 'guitarist': 'Kirk Hammet'}]
+    >>> valueof(bands, 'singer')
+    ['Robert Plant', 'James Hetfield']
 
     """
     if isinstance(records, dict):
@@ -451,6 +550,10 @@ def valueof(records, key):
 
 def take(n, seq):
     """Return the n first items in the sequence
+
+    :param n: an integer
+    :param seq: a sequence
+    :returns: a list
 
     >>> take(3, xrange(10000))
     [0, 1, 2]
@@ -462,6 +565,10 @@ def take(n, seq):
 def drop(n, seq):
     """Return the n last items in the sequence
 
+    :param n: an integer
+    :param seq: a sequence
+    :returns: a list
+
     >>> drop(9997, xrange(10000))
     [9997, 9998, 9999]
 
@@ -472,7 +579,11 @@ def drop(n, seq):
 def find(fn, record):
     """Apply a function on the record and return the corresponding new record
 
-    >>> print find(max, {'Terry': 30, 'Graham': 35, 'John': 27})
+    :param fn: a function
+    :param record: a dictionary
+    :returns: a dictionary
+
+    >>> find(max, {'Terry': 30, 'Graham': 35, 'John': 27})
     {'Graham': 35}
 
     """
@@ -482,7 +593,17 @@ def find(fn, record):
 
 
 def remove(coll, value):
-    """Remove all the occurrences of a given value"""
+    """Remove all the occurrences of a given value
+
+    :param coll: a collection
+    :param value: the value to remove
+    :returns: a list
+
+    >>> data = ('NA', 0, 1, 'NA', 1, 2, 3, 'NA', 5)
+    >>> remove(data, 'NA')
+    (0, 1, 1, 2, 3, 5)
+
+    """
     coll_class = coll.__class__
     return coll_class(x for x in coll if x != value)
 
@@ -490,14 +611,30 @@ def remove(coll, value):
 # INSPECTION {{{1
 
 def isiterable(coll):
-    """Return True if the collection is any iterable except a string"""
+    """Return True if the collection is any iterable except a string
+
+    :param coll: a collection
+    :returns: a boolean
+
+    >>> isiterable(1)
+    False
+    >>> isiterable('iterable')
+    False
+    >>> isiterable([1, 2, 3])
+    True
+
+    """
     return hasattr(coll, "__iter__")
 
 
 def are_in(items, collection):
     """Return True for each item in the collection
 
-    >>> print are_in(['Terry', 'James'], ['Terry', 'John', 'Eric'])
+    :param items: a sub-collection
+    :param collection: a collection
+    :returns: a list of booleans
+
+    >>> are_in(['Terry', 'James'], ['Terry', 'John', 'Eric'])
     [True, False]
 
     """
@@ -511,12 +648,13 @@ def any_in(items, collection):
 
     :param items: items that may be in the collection
     :param collection: a collection
+    :returns: a boolean
 
-    >>> print any_in(2, [1, 3, 2])
+    >>> any_in(2, [1, 3, 2])
     True
-    >>> print any_in([1, 2], [1, 3, 2])
+    >>> any_in([1, 2], [1, 3, 2])
     True
-    >>> print any_in([1, 2], [1, 3])
+    >>> any_in([1, 2], [1, 3])
     True
 
     """
@@ -528,12 +666,13 @@ def all_in(items, collection):
 
     :param items: items that may be in the collection
     :param collection: a collection
+    :returns: a boolean
 
-    >>> print all_in(2, [1, 3, 2])
+    >>> all_in(2, [1, 3, 2])
     True
-    >>> print all_in([1, 2], [1, 3, 2])
+    >>> all_in([1, 2], [1, 3, 2])
     True
-    >>> print all_in([1, 2], [1, 3])
+    >>> all_in([1, 2], [1, 3])
     False
 
     """
@@ -566,16 +705,33 @@ def monotony(seq):
 
 
 def attributes(data):
-    """Return all the non callable and non special attributes of the input data"""
+    """Return all the non callable and non special attributes of the input data
+
+    >>> class table:
+    ...     def __init__(self, name, rows, cols):
+    ...         self.name = name
+    ...         self.rows = rows
+    ...         self.cols = cols
+
+    >>> t = table('people', 100, 3)
+    >>> attributes(t)
+    ['cols', 'name', 'rows']
+
+    """
     return [x for x in dir(data) if not callable(x) and not x.startswith('__')]
 
 
 def find_each(fn, records):
     """Apply a function on the records and return the corresponding new record
 
-    >>> find_each(max, [{'math': 13, 'biology': 17, 'chemistry': 18},
+    :param fn: a function
+    :param records: a collection of dictionaries
+    :returns: new records
+
+    >>> grades = [{'math': 13, 'biology': 17, 'chemistry': 18},
     ... {'math': 15, 'biology': 12, 'chemistry': 13},
-    ... {'math': 16, 'biology': 17, 'chemistry': 11}])
+    ... {'math': 16, 'biology': 17, 'chemistry': 11}]
+    >>> find_each(max, grades)
     [{'chemistry': 18}, {'math': 15}, {'biology': 17}]
 
     """
@@ -590,7 +746,7 @@ def dfilter(fn, record):
     :returns: a dict
 
     >>> odd = lambda x: x % 2 != 0
-    >>> print dfilter(odd, {'Terry': 30, 'Graham': 35, 'John': 27})
+    >>> dfilter(odd, {'Terry': 30, 'Graham': 35, 'John': 27})
     {'John': 27, 'Graham': 35}
 
     """
@@ -623,18 +779,24 @@ def _filter_occurrences(count, relat_op):
 def occurrences(coll, value=None, **options):
     """Return the occurrences of the elements in the collection
 
-    >>> print occurrences((1, 1, 2, 3))
+    :param coll: a collection
+    :param value: a value in the collection
+    :param options: an optional keyword used as a criterion to filter the
+    values in the collection
+    :returns: the frequency of the values in the collection as a dictionary
+
+    >>> occurrences((1, 1, 2, 3))
     {1: 2, 2: 1, 3: 1}
-    >>> print occurrences((1, 1, 2, 3), 1)
+    >>> occurrences((1, 1, 2, 3), 1)
     2
 
     # Filter the values of the occurrences that
     # are <, <=, >, >=, == or != than a given number
-    >>> print occurrences((1, 1, 2, 3), lt=3)
+    >>> occurrences((1, 1, 2, 3), lt=3)
     {1: 2, 2: 1, 3: 1}
-    >>> print occurrences((1, 1, 2, 3), gt=1)
+    >>> occurrences((1, 1, 2, 3), gt=1)
     {1: 2}
-    >>> print occurrences((1, 1, 2, 3), ne=1)
+    >>> occurrences((1, 1, 2, 3), ne=1)
     {1: 2}
 
     """
@@ -678,13 +840,27 @@ def indexof(coll, item, start=0, default=None):
 
 
 def indexesof(coll, item):
-    """Return all the indexes of the item in the collection"""
+    """Return all the indexes of the item in the collection
+
+    :param coll: the collection
+    :param item: a value
+    :returns: a list of indexes
+
+    >>> monties = ['Eric', 'John', 'Terry', 'Terry', 'Graham', 'Mickael']
+    >>> indexesof(monties, 'Terry')
+    [2, 3]
+
+    """
     return [indexof(coll, item, i) for i in xrange(len(coll)) if coll[i] == item]
 
 
 def count(fn, coll):
-    """Return the count of True values returned by the function applied to the
+    """Return the count of True values returned by the predicate function applied to the
     collection
+
+    :param fn: a predicate function
+    :param coll: a collection
+    :returns: an integer
 
     >>> count(lambda x: x % 2 == 0, [11, 22, 31, 24, 15])
     2
@@ -696,7 +872,11 @@ def count(fn, coll):
 # TODO Check collections.Counter can be imported
 # (it is available only in recent versions of Python)
 def isdistinct(coll):
-    """
+    """Return True if all the items in the collections are distinct.
+
+    :param coll: a collection
+    :returns: a boolean
+
     >>> isdistinct([1, 2, 3])
     True
     >>> isdistinct([1, 2, 2])
@@ -708,15 +888,59 @@ def isdistinct(coll):
 
 
 def nrow(records):
-    """Return the number of rows in the records"""
+    """Return the number of rows in the records
+
+    :param records: a list of dictionaries
+    :returns: an integer
+
+    >>> movies = [
+    ... {'title': 'The Holy Grail', 'year': 1975, 'budget': 4E5, 'total_gross': 5E6},
+    ... {'title': 'Life of Brian', 'year': 1979, 'budget': 4E6, 'total_gross': 20E6},
+    ... {'title': 'The Meaning of Life', 'year': 1983, 'budget': 9E6, 'total_gross': 14.9E6}
+    ... ]
+    >>> nrow(movies)
+    3
+
+    """
     return len(records)
 
 
 def ncol(records):
-    """Return the number of columns in the records"""
+    """Return the number of columns in the records
+
+    :param records: a list of dictionaries
+    :returns: an integer
+
+    >>> movies = [
+    ... {'title': 'The Holy Grail', 'year': 1975, 'budget': 4E5, 'total_gross': 5E6},
+    ... {'title': 'Life of Brian', 'year': 1979, 'budget': 4E6, 'total_gross': 20E6},
+    ... {'title': 'The Meaning of Life', 'year': 1983, 'budget': 9E6, 'total_gross': 14.9E6}
+    ... ]
+    >>> ncol(movies)
+    4
+
+    """
     return len(records[0])
 
 
 def names(records):
-    """Return the column names of the records"""
+    """Return the column names of the records
+
+    :param records: a list of dictionaries
+    :returns: a list of strings
+
+    >>> movies = [
+    ... {'title': 'The Holy Grail', 'year': 1975, 'budget': 4E5, 'total_gross': 5E6},
+    ... {'title': 'Life of Brian', 'year': 1979, 'budget': 4E6, 'total_gross': 20E6},
+    ... {'title': 'The Meaning of Life', 'year': 1983, 'budget': 9E6, 'total_gross': 14.9E6}
+    ... ]
+    >>> names(movies)
+    ['total_gross', 'year', 'budget', 'title']
+
+    """
     return records[0].keys()
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
