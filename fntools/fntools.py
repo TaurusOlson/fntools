@@ -362,7 +362,7 @@ def pipe_each(coll, *fns):
 def shift(func, *args, **kwargs):
     """This function is basically a beefed up lambda x: func(x, *args, **kwargs)
 
-    `shift` comes in handy when it is used in a pipeline with a function that
+    :func:`shift` comes in handy when it is used in a pipeline with a function that
     needs the passed value as its first argument.
 
     :param func: a function
@@ -468,7 +468,7 @@ def pluck(record, *keys, **kwargs):
     >>> pluck(d, 'name', 'color')
     {'color': 'blue', 'name': 'Lancelot'}
 
-    The keyword 'default' allows to replace a `None` value::
+    The keyword 'default' allows to replace a ``None`` value::
 
         >>> d = {'year': 2014, 'movie': 'Bilbo'}
         >>> pluck(d, 'year', 'movie', 'nb_aliens', default=0)
