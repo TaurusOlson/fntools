@@ -13,7 +13,7 @@ from .fntools import use_with, zip_with, unzip, concat, mapcat, dmap, rmap, repl
         ncol, names
 
 
-__version__ = '1.1.1'
+__version__ = '1.1.2'
 __title__ = 'fntools'
 __author__ = 'Taurus Olson'
 __license__ = 'MIT'
