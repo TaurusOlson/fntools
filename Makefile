@@ -5,3 +5,6 @@ release:
 	rm -r dist
 	python setup.py sdist bdist_wheel
 	twine upload dist/*
+
+doc:
+	cd docs && make html
