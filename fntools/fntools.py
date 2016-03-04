@@ -92,7 +92,6 @@ def mapcat(fn, colls):
     return concat(map(fn, colls))
 
 
-# TODO Fix and test dmap
 def dmap(fn, record):
     """map for a directory
 
@@ -445,6 +444,7 @@ def duplicates(coll):
     return list(set(x for x in coll if coll.count(x) > 1))
 
 
+# TODO Second argument should be an iterable
 def pluck(record, *keys, **kwargs):
     """Return the record with the selected keys
 
@@ -534,6 +534,7 @@ def get_in(record, *keys, **kwargs):
     return reduce(lambda a, x: a.get(x, default), keys, record)
 
 
+# TODO Rename valueof
 def valueof(records, key):
     """Extract the value corresponding to the given key in all the dictionaries
 
@@ -706,6 +707,9 @@ def monotony(seq):
 
 def attributes(data):
     """Return all the non callable and non special attributes of the input data
+
+    :param data: an object
+    :returns: a list
 
     >>> class table:
     ...     def __init__(self, name, rows, cols):
