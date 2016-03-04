@@ -32,11 +32,13 @@ def use_with(data, fn, *attrs):
     :returns: an object
 
     Let's create some data first::
+
     >>> from collections import namedtuple
     >>> Person = namedtuple('Person', ('name', 'age', 'gender'))
     >>> alice = Person('Alice', 30, 'F')
 
     Usage::
+
     >>> make_csv_row = lambda n, a, g: '%s,%d,%s' % (n, a, g)
     >>> use_with(alice, make_csv_row, 'name', 'age', 'gender')
     'Alice,30,F'
@@ -370,10 +372,12 @@ def shift(func, *args, **kwargs):
     >>> def div(x, y): return float(x) / y
 
     This is equivalent to div(42, 2)::
+
     >>> shift(div, 2)(42)
     21.0
 
     which is different from div(2, 42)::
+
     >>> from functools import partial
     >>> partial(div, 2)(42)
     0.047619047619047616
@@ -465,6 +469,7 @@ def pluck(record, *keys, **kwargs):
     {'color': 'blue', 'name': 'Lancelot'}
 
     The keyword 'default' allows to replace a `None` value::
+
     >>> d = {'year': 2014, 'movie': 'Bilbo'}
     >>> pluck(d, 'year', 'movie', 'nb_aliens', default=0)
     {'movie': 'Bilbo', 'nb_aliens': 0, 'year': 2014}
@@ -501,11 +506,13 @@ def use(data, attrs):
     :returns: a list
 
     With a dict::
+
     >>> band = {'name': 'Metallica', 'singer': 'James Hetfield', 'guitarist': 'Kirk Hammet'}
     >>> use(band, ('name', 'date', 'singer'))
     ['Metallica', None, 'James Hetfield']
 
     With a non dict data structure::
+
     >>> from collections import namedtuple
     >>> Person = namedtuple('Person', ('name', 'age', 'gender'))
     >>> alice = Person('Alice', 30, 'F')
@@ -805,6 +812,7 @@ def occurrences(coll, value=None, **options):
 
     Filter the values of the occurrences that are 
     <, <=, >, >=, == or != than a given number::
+
     >>> occurrences((1, 1, 2, 3), lt=3)
     {1: 2, 2: 1, 3: 1}
     >>> occurrences((1, 1, 2, 3), gt=1)
