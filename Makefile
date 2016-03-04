@@ -8,3 +8,6 @@ release:
 
 doc:
 	cd docs && make html
+
+changelog: 
+	git changelog -a docs/changelog.rst

@@ -12,6 +12,7 @@ fntools's documentation
    :maxdepth: 2
    
    api
+   changelog
 
 .. quickstart
 
